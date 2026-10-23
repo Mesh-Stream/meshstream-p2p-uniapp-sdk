@@ -10,6 +10,8 @@
       <input v-model="sdkKey" class="input" placeholder="key_..." placeholder-class="placeholder" />
       <text class="label">Media URL</text>
       <input v-model="mediaUrl" class="input" placeholder="https://example.com/live.m3u8" placeholder-class="placeholder" />
+      <text class="label">Content ID (optional)</text>
+      <input v-model="contentId" class="input" placeholder="Use the same ID on Web and App" placeholder-class="placeholder" />
       <button class="primary" :disabled="working" @click="start">{{ working ? 'Working...' : 'Create session' }}</button>
       <text v-if="error" class="error">{{ error }}</text>
     </view>
@@ -54,7 +56,10 @@ import { computed, onBeforeUnmount, ref } from 'vue'
 import { MeshStream } from '@/uni_modules/meshstream-p2p'
 
 const sdkKey = ref('')
-const mediaUrl = ref('')
+// Keep the native demo on the same stream as apps/web-demo so both clients
+// derive the same swarm when no explicit content ID is supplied.
+const mediaUrl = ref('https://test-streams.mux.dev/x36xhzz/url_2/193039199_mp4_h264_aac_ld_7.m3u8')
+const contentId = ref('')
 const playbackUrl = ref('')
 const playbackMode = ref('')
 const fallbackReason = ref('')
@@ -181,10 +186,15 @@ async function start() {
         playbackMode.value = 'NATIVE_CDN'
         fallbackReason.value = textField(event, 'reason') || 'UNAVAILABLE'
       }
-      appendLog(type === 'p2pUnavailable' ? `${type}: ${textField(event, 'reason')}` : type)
+      if (type === 'trackerError' || type === 'peerConnectError') {
+        appendLog(`${type}: ${numberField(event, 'totalErrors')}`)
+      } else {
+        appendLog(type === 'p2pUnavailable' ? `${type}: ${textField(event, 'reason')}` : type)
+      }
     })
     session = await MeshStream.createPlaybackSession(client.clientId, {
       url: mediaUrl.value.trim(),
+      ...(contentId.value.trim() ? { contentId: contentId.value.trim() } : {}),
       mimeType: mediaUrl.value.includes('.mpd') ? 'mpd' : 'm3u8',
     })
     playbackUrl.value = session.playbackUrl
