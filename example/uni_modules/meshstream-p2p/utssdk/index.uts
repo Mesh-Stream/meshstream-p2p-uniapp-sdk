@@ -1,0 +1,170 @@
+import {
+  MeshStreamConfig,
+  MeshStreamDiagnostics,
+  MeshStreamEvent,
+  MeshStreamEventListener,
+  MeshStreamPlaybackMode,
+  MeshStreamStats,
+  MeshStreamStatus,
+  PlaybackSessionOptions,
+} from './interface.uts'
+
+const eventListeners = new Set<MeshStreamEventListener>()
+let eventBridgeInstalled = false
+
+function parseObject(payload: string): UTSJSONObject {
+  return JSON.parse(payload) as UTSJSONObject
+}
+
+function requireText(value: string | null | undefined, field: string): string {
+  if (value == null || value == '') throw new Error(field + ' must not be empty.')
+  return value as string
+}
+
+function requireDuration(value: number, field: string): void {
+  if (!Number.isFinite(value) || value < 0) throw new Error(field + ' must be a finite non-negative number.')
+}
+
+function installEventBridge(): void {
+  if (eventBridgeInstalled) return
+  MeshStreamNative.setEventListener((payload: string) => {
+    const event = parseObject(payload) as MeshStreamEvent
+    eventListeners.forEach((listener: MeshStreamEventListener) => listener(event))
+  })
+  eventBridgeInstalled = true
+}
+
+export class MeshStreamPlaybackSession {
+  readonly clientId: string
+  readonly sessionId: string
+  readonly playbackUrl: string
+  readonly playbackMode: MeshStreamPlaybackMode
+  readonly fallbackReason: string | null
+  private closed = false
+
+  constructor(info: UTSJSONObject) {
+    this.clientId = info.getString('clientId')!
+    this.sessionId = info.getString('sessionId')!
+    this.playbackUrl = info.getString('playbackUrl')!
+    this.playbackMode = info.getString('playbackMode')! as MeshStreamPlaybackMode
+    this.fallbackReason = info.getString('fallbackReason')
+  }
+
+  async preload(): Promise<boolean> {
+    this.assertOpen()
+    return MeshStreamNative.preload(this.clientId, this.sessionId)
+  }
+
+  async setP2pEnabled(enabled: boolean): Promise<void> {
+    this.assertOpen()
+    MeshStreamNative.setP2pEnabled(this.clientId, this.sessionId, enabled)
+  }
+
+  async updateBufferedDurationMs(durationMs: number): Promise<void> {
+    this.assertOpen(); requireDuration(durationMs, 'durationMs')
+    MeshStreamNative.updateBufferedDurationMs(this.clientId, this.sessionId, Math.floor(durationMs))
+  }
+
+  async updateCurrentPositionMs(positionMs: number): Promise<void> {
+    this.assertOpen(); requireDuration(positionMs, 'positionMs')
+    MeshStreamNative.updateCurrentPositionMs(this.clientId, this.sessionId, Math.floor(positionMs))
+  }
+
+  async getStats(): Promise<MeshStreamStats> {
+    this.assertOpen()
+    return parseObject(MeshStreamNative.getStats(this.clientId, this.sessionId)) as MeshStreamStats
+  }
+
+  async getDiagnostics(): Promise<MeshStreamDiagnostics> {
+    this.assertOpen()
+    return parseObject(MeshStreamNative.getDiagnostics(this.clientId, this.sessionId)) as MeshStreamDiagnostics
+  }
+
+  async close(): Promise<void> {
+    if (this.closed) return
+    MeshStreamNative.closeSession(this.clientId, this.sessionId)
+    this.closed = true
+  }
+
+  private assertOpen(): void {
+    if (this.closed) throw new Error('MeshStream playback session is closed.')
+  }
+}
+
+export class MeshStreamClient {
+  readonly clientId: string
+  private closed = false
+
+  constructor(clientId: string) { this.clientId = clientId }
+
+  async createPlaybackSession(options: PlaybackSessionOptions): Promise<MeshStreamPlaybackSession> {
+    this.assertOpen(); requireText(options.url, 'options.url')
+    const reply = parseObject(MeshStreamNative.createPlaybackSession(this.clientId, JSON.stringify(options)))
+    return new MeshStreamPlaybackSession(reply)
+  }
+
+  async getStatus(): Promise<MeshStreamStatus> {
+    this.assertOpen()
+    return parseObject(MeshStreamNative.getStatus(this.clientId)) as MeshStreamStatus
+  }
+
+  async close(): Promise<void> {
+    if (this.closed) return
+    MeshStreamNative.closeClient(this.clientId)
+    this.closed = true
+  }
+
+  private assertOpen(): void {
+    if (this.closed) throw new Error('MeshStream client is closed.')
+  }
+}
+
+export class MeshStream {
+  static async getSdkVersion(): Promise<string> {
+    return MeshStreamNative.getSdkVersion()
+  }
+
+  static async create(config: MeshStreamConfig): Promise<MeshStreamClient> {
+    requireText(config.key, 'config.key')
+    installEventBridge()
+    const reply = parseObject(MeshStreamNative.createClient(config.key, config.p2pEnabled))
+    return new MeshStreamClient(reply.getString('clientId')!)
+  }
+
+  static async createPlaybackSession(clientId: string, options: PlaybackSessionOptions): Promise<MeshStreamPlaybackSession> {
+    const reply = parseObject(MeshStreamNative.createPlaybackSession(clientId, JSON.stringify(options)))
+    return new MeshStreamPlaybackSession(reply)
+  }
+
+  static async getStats(clientId: string, sessionId: string): Promise<MeshStreamStats> {
+    return parseObject(MeshStreamNative.getStats(clientId, sessionId)) as MeshStreamStats
+  }
+
+  static async getDiagnostics(clientId: string, sessionId: string): Promise<MeshStreamDiagnostics> {
+    return parseObject(MeshStreamNative.getDiagnostics(clientId, sessionId)) as MeshStreamDiagnostics
+  }
+
+  static async updateCurrentPositionMs(clientId: string, sessionId: string, positionMs: number): Promise<void> {
+    requireDuration(positionMs, 'positionMs')
+    MeshStreamNative.updateCurrentPositionMs(clientId, sessionId, Math.floor(positionMs))
+  }
+
+  static async updateBufferedDurationMs(clientId: string, sessionId: string, durationMs: number): Promise<void> {
+    requireDuration(durationMs, 'durationMs')
+    MeshStreamNative.updateBufferedDurationMs(clientId, sessionId, Math.floor(durationMs))
+  }
+
+  static async closeSession(clientId: string, sessionId: string): Promise<void> {
+    MeshStreamNative.closeSession(clientId, sessionId)
+  }
+
+  static async closeClient(clientId: string): Promise<void> {
+    MeshStreamNative.closeClient(clientId)
+  }
+
+  static addEventListener(listener: MeshStreamEventListener): () => void {
+    installEventBridge()
+    eventListeners.add(listener)
+    return () => { eventListeners.delete(listener) }
+  }
+}

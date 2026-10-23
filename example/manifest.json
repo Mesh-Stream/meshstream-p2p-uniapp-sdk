@@ -1,0 +1,23 @@
+{
+    "name" : "MeshStream UniApp Demo",
+    "appid" : "__UNI__D1D69C5",
+    "description" : "MeshStream P2P uni-app SDK demonstration.",
+    "versionName" : "1.0.0",
+    "versionCode" : 100,
+    "app-plus" : {
+        "usingComponents" : true,
+        "modules" : {
+            "VideoPlayer" : {}
+        },
+        "distribute" : {
+            "android" : {
+                "minSdkVersion" : 24
+            },
+            "ios" : {
+                "deploymentTarget" : "13.0",
+                "dSYMs" : false
+            }
+        }
+    },
+    "vueVersion" : "3"
+}

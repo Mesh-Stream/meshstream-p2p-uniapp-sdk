@@ -1,0 +1,14 @@
+{
+  "deploymentTarget": "13.0",
+  "frameworks": [
+    "Foundation.framework",
+    "Network.framework",
+    "Security.framework"
+  ],
+  "dependencies-pods": [
+    {
+      "name": "MeshStreamKit",
+      "version": "1.0.2"
+    }
+  ]
+}

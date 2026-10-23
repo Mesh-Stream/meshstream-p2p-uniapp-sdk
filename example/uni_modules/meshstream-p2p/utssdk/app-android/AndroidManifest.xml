@@ -1,0 +1,8 @@
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  package="uts.sdk.modules.meshstreamP2p">
+  <uses-permission android:name="android.permission.INTERNET" />
+  <application
+    android:networkSecurityConfig="@xml/meshstream_network_security_config"
+    android:usesCleartextTraffic="false" />
+</manifest>
