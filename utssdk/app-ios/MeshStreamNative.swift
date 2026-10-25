@@ -21,7 +21,7 @@ public final class MeshStreamNative: NSObject {
   private static var clients: [String: ClientState] = [:]
   private static var eventListener: ((String) -> Void)?
 
-  public static func getSdkVersion() -> String { P2PSDK.getSdkVersion() }
+  public static func getSdkVersion() -> String { P2PSDK.version() }
 
   public static func setEventListener(_ listener: ((String) -> Void)?) {
     lock.lock(); eventListener = listener; lock.unlock()

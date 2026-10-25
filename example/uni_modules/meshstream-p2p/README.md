@@ -18,7 +18,7 @@ Copy this repository into the consumer application's `uni_modules/meshstream-p2p
 import { MeshStream } from '@/uni_modules/meshstream-p2p'
 ```
 
-The Android side resolves `io.meshstream:meshstream-android-sdk:1.0.2` from the MeshStream Maven repository. The iOS side resolves `MeshStreamKit` version `1.0.2` through CocoaPods. Native dependency changes require cloud packaging or a custom base; a stock base cannot validate them.
+The Android side resolves `io.meshstream:meshstream-android-sdk:1.0.4` from the MeshStream Maven repository. The iOS side resolves `MeshStreamKit` version `1.0.4` through CocoaPods. Native dependency changes require cloud packaging or a custom base; a stock base cannot validate them.
 
 ## Playback
 
