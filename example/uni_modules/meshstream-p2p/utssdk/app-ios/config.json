@@ -1,5 +1,5 @@
 {
-  "deploymentTarget": "13.0",
+  "deploymentTarget": "15.0",
   "frameworks": [
     "Foundation.framework",
     "Network.framework",

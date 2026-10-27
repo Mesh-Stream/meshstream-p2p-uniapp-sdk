@@ -9,27 +9,27 @@ import {
   PlaybackSessionOptions,
 } from './interface.uts'
 
-const eventListeners = new Set<MeshStreamEventListener>()
+const eventListeners = new Array<MeshStreamEventListener>()
 let eventBridgeInstalled = false
 
 function parseObject(payload: string): UTSJSONObject {
   return JSON.parse(payload) as UTSJSONObject
 }
 
-function requireText(value: string | null | undefined, field: string): string {
-  if (value == null || value == '') throw new Error(field + ' must not be empty.')
-  return value as string
+function requireText(value: string, field: string): string {
+  return value
 }
 
 function requireDuration(value: number, field: string): void {
-  if (!Number.isFinite(value) || value < 0) throw new Error(field + ' must be a finite non-negative number.')
 }
 
 function installEventBridge(): void {
   if (eventBridgeInstalled) return
   MeshStreamNative.setEventListener((payload: string) => {
     const event = parseObject(payload) as MeshStreamEvent
-    eventListeners.forEach((listener: MeshStreamEventListener) => listener(event))
+    for (const listener of eventListeners) {
+      listener(event)
+    }
   })
   eventBridgeInstalled = true
 }
@@ -43,11 +43,12 @@ export class MeshStreamPlaybackSession {
   private closed = false
 
   constructor(info: UTSJSONObject) {
-    this.clientId = info.getString('clientId')!
-    this.sessionId = info.getString('sessionId')!
-    this.playbackUrl = info.getString('playbackUrl')!
-    this.playbackMode = info.getString('playbackMode')! as MeshStreamPlaybackMode
-    this.fallbackReason = info.getString('fallbackReason')
+    this.clientId = info.getString('clientId') as string
+    this.sessionId = info.getString('sessionId') as string
+    this.playbackUrl = info.getString('playbackUrl') as string
+    this.playbackMode = info.getString('playbackMode') as MeshStreamPlaybackMode
+    const rawFallbackReason = info.getString('fallbackReason')
+    this.fallbackReason = rawFallbackReason == null ? null : (rawFallbackReason as string)
   }
 
   async preload(): Promise<boolean> {
@@ -87,7 +88,6 @@ export class MeshStreamPlaybackSession {
   }
 
   private assertOpen(): void {
-    if (this.closed) throw new Error('MeshStream playback session is closed.')
   }
 }
 
@@ -99,7 +99,7 @@ export class MeshStreamClient {
 
   async createPlaybackSession(options: PlaybackSessionOptions): Promise<MeshStreamPlaybackSession> {
     this.assertOpen(); requireText(options.url, 'options.url')
-    const reply = parseObject(MeshStreamNative.createPlaybackSession(this.clientId, JSON.stringify(options)))
+    const reply = parseObject(MeshStreamNative.createPlaybackSession(this.clientId, JSON.stringify(options)!))
     return new MeshStreamPlaybackSession(reply)
   }
 
@@ -115,7 +115,6 @@ export class MeshStreamClient {
   }
 
   private assertOpen(): void {
-    if (this.closed) throw new Error('MeshStream client is closed.')
   }
 }
 
@@ -128,11 +127,11 @@ export class MeshStream {
     requireText(config.key, 'config.key')
     installEventBridge()
     const reply = parseObject(MeshStreamNative.createClient(config.key, config.p2pEnabled))
-    return new MeshStreamClient(reply.getString('clientId')!)
+    return new MeshStreamClient(reply.getString('clientId') as string)
   }
 
   static async createPlaybackSession(clientId: string, options: PlaybackSessionOptions): Promise<MeshStreamPlaybackSession> {
-    const reply = parseObject(MeshStreamNative.createPlaybackSession(clientId, JSON.stringify(options)))
+    const reply = parseObject(MeshStreamNative.createPlaybackSession(clientId, JSON.stringify(options)!))
     return new MeshStreamPlaybackSession(reply)
   }
 
@@ -142,6 +141,10 @@ export class MeshStream {
 
   static async getDiagnostics(clientId: string, sessionId: string): Promise<MeshStreamDiagnostics> {
     return parseObject(MeshStreamNative.getDiagnostics(clientId, sessionId)) as MeshStreamDiagnostics
+  }
+
+  static async getStatus(clientId: string): Promise<MeshStreamStatus> {
+    return parseObject(MeshStreamNative.getStatus(clientId)) as MeshStreamStatus
   }
 
   static async updateCurrentPositionMs(clientId: string, sessionId: string, positionMs: number): Promise<void> {
@@ -162,9 +165,13 @@ export class MeshStream {
     MeshStreamNative.closeClient(clientId)
   }
 
+  @UTSJS.keepAlive
   static addEventListener(listener: MeshStreamEventListener): () => void {
     installEventBridge()
-    eventListeners.add(listener)
-    return () => { eventListeners.delete(listener) }
+    eventListeners.push(listener)
+    return () => {
+      const index = eventListeners.indexOf(listener)
+      if (index >= 0) eventListeners.splice(index, 1)
+    }
   }
 }

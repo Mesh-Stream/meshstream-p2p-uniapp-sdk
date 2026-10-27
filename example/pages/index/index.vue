@@ -33,6 +33,7 @@
 
     <view v-if="stats || diagnostics" class="panel">
       <text class="section-title">Telemetry</text>
+      <view v-if="status" class="metric"><text>SDK status</text><text>{{ statusText }}</text></view>
       <view class="metric"><text>Mode</text><text>{{ playbackMode || '-' }}</text></view>
       <view class="metric"><text>Peers</text><text>{{ numberField(stats, 'connectedPeers') }}</text></view>
       <view class="metric"><text>P2P download</text><text>{{ bytesField(stats, 'p2pDownloaded') }}</text></view>
@@ -65,6 +66,7 @@ const playbackMode = ref('')
 const fallbackReason = ref('')
 const stats = ref(null)
 const diagnostics = ref(null)
+const status = ref(null)
 const logs = ref([])
 const working = ref(false)
 const error = ref('')
@@ -81,6 +83,15 @@ const diagnosticsText = computed(() => {
   const tracker = textField(diagnostics.value, 'lastTrackerError') || 'none'
   const peer = textField(diagnostics.value, 'lastPeerError') || 'none'
   return `tracker ${tracker}, peer ${peer}`
+})
+
+const statusText = computed(() => {
+  if (!status.value) return 'loading'
+  const reason = textField(status.value, 'reason') || 'UNKNOWN'
+  const enabled = field(status.value, 'effectiveP2pEnabled')
+  const pool = field(status.value, 'trackerPoolReady')
+  const version = textField(status.value, 'configVersion') || 'none'
+  return `${reason}; enabled=${String(enabled)}; pool=${String(pool)}; config=${version}`
 })
 
 function appendLog(text) {
@@ -127,9 +138,11 @@ async function refreshTelemetry() {
     MeshStream.getStats(activeClient.clientId, activeSession.sessionId),
     MeshStream.getDiagnostics(activeClient.clientId, activeSession.sessionId),
   ])
+  const nextStatus = await activeClient.getStatus()
   if (client !== activeClient || session !== activeSession) return
   stats.value = nextStats
   diagnostics.value = nextDiagnostics
+  status.value = nextStatus
 }
 
 async function releaseResources() {
@@ -146,6 +159,7 @@ async function releaseResources() {
   fallbackReason.value = ''
   stats.value = null
   diagnostics.value = null
+  status.value = null
   lastPositionReportAt = 0
   lastBufferReportAt = 0
 

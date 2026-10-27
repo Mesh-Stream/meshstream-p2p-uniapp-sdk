@@ -21,19 +21,19 @@ public final class MeshStreamNative: NSObject {
   private static var clients: [String: ClientState] = [:]
   private static var eventListener: ((String) -> Void)?
 
-  public static func getSdkVersion() -> String { P2PSDK.version() }
+  public static func getSdkVersion() -> String { P2PSDK.getVersion() }
 
   public static func setEventListener(_ listener: ((String) -> Void)?) {
     lock.lock(); eventListener = listener; lock.unlock()
   }
 
-  public static func createClient(_ key: String, _ p2pEnabled: Bool?) throws -> String {
+  public static func createClient(_ key: String, _ p2pEnabled: Bool?) -> String {
     guard !key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-      throw NativeError("key must not be empty")
+      return errorJson("key must not be empty")
     }
     let config = P2PConfig(key: key)
     if let enabled = p2pEnabled { config.p2pEnabled = enabled }
-    let client = try P2PSDK.client(with: config)
+    guard let client = try? P2PSDK.client(with: config) else { return errorJson("MeshStream client creation failed") }
     let clientId = UUID().uuidString
     let listener = NativeListener { nativeId, event in receiveEvent(clientId, nativeId, event) }
     let state = ClientState(client: client, listener: listener)
@@ -42,22 +42,22 @@ public final class MeshStreamNative: NSObject {
     return encode(["clientId": clientId, "status": status(client.sdkStatus)])
   }
 
-  public static func createPlaybackSession(_ clientId: String, _ optionsJson: String) throws -> String {
-    let options = try object(optionsJson)
+  public static func createPlaybackSession(_ clientId: String, _ optionsJson: String) -> String {
+    guard let options = try? object(optionsJson) else { return errorJson("Invalid JSON options") }
     guard let rawUrl = options["url"] as? String,
           let url = URL(string: rawUrl),
           let scheme = url.scheme?.lowercased(), ["http", "https"].contains(scheme), url.host != nil else {
-      throw NativeError("options.url must be an HTTP(S) URL")
+      return errorJson("options.url must be an HTTP(S) URL")
     }
-    let state = try client(clientId)
+    guard let state = client(clientId) else { return errorJson("Unknown or closed MeshStream client: \(clientId)") }
     let nativeOptions = P2PPlaybackOptions()
     nativeOptions.contentId = options["contentId"] as? String
     nativeOptions.mimeType = options["mimeType"] as? String
     nativeOptions.originHeaders = options["originHeaders"] as? [String: String] ?? [:]
-    let session = try state.client.createPlaybackSession(with: url, options: nativeOptions)
+    guard let session = try? state.client.createPlaybackSession(with: url, options: nativeOptions) else { return errorJson("Playback session creation failed") }
     let sessionId = UUID().uuidString
     lock.lock()
-    guard clients[clientId] === state, !state.closed else { lock.unlock(); session.close(); throw NativeError("MeshStream client was closed") }
+    guard clients[clientId] === state, !state.closed else { lock.unlock(); session.close(); return errorJson("MeshStream client was closed") }
     state.sessions[sessionId] = session
     state.nativeSessionIds[session.sessionId] = sessionId
     let pending = state.pendingEvents.removeValue(forKey: session.sessionId) ?? []
@@ -71,13 +71,13 @@ public final class MeshStreamNative: NSObject {
     return encode(result)
   }
 
-  public static func preload(_ clientId: String, _ sessionId: String) throws -> Bool { try session(clientId, sessionId).preload() }
-  public static func setP2pEnabled(_ clientId: String, _ sessionId: String, _ enabled: Bool) throws { try session(clientId, sessionId).setP2PEnabled(enabled) }
-  public static func updateBufferedDurationMs(_ clientId: String, _ sessionId: String, _ durationMs: Int64) throws { try session(clientId, sessionId).updateBufferedDurationMs(max(0, durationMs)) }
-  public static func updateCurrentPositionMs(_ clientId: String, _ sessionId: String, _ positionMs: Int64) throws { try session(clientId, sessionId).updateCurrentPositionMs(max(0, positionMs)) }
-  public static func getStatus(_ clientId: String) throws -> String { encode(status(try client(clientId).client.sdkStatus)) }
-  public static func getStats(_ clientId: String, _ sessionId: String) throws -> String { encode(stats(try session(clientId, sessionId).statistics())) }
-  public static func getDiagnostics(_ clientId: String, _ sessionId: String) throws -> String { encode(diagnostics(try session(clientId, sessionId).diagnostics())) }
+  public static func preload(_ clientId: String, _ sessionId: String) -> Bool { session(clientId, sessionId)?.preload() ?? false }
+  public static func setP2pEnabled(_ clientId: String, _ sessionId: String, _ enabled: Bool) { session(clientId, sessionId)?.setP2PEnabled(enabled) }
+  public static func updateBufferedDurationMs(_ clientId: String, _ sessionId: String, _ durationMs: NSNumber) { session(clientId, sessionId)?.updateBufferedDurationMs(max(0, durationMs.int64Value)) }
+  public static func updateCurrentPositionMs(_ clientId: String, _ sessionId: String, _ positionMs: NSNumber) { session(clientId, sessionId)?.updateCurrentPositionMs(max(0, positionMs.int64Value)) }
+  public static func getStatus(_ clientId: String) -> String { guard let value = client(clientId) else { return errorJson("Unknown or closed MeshStream client: \(clientId)") }; return encode(status(value.client.sdkStatus)) }
+  public static func getStats(_ clientId: String, _ sessionId: String) -> String { guard let value = session(clientId, sessionId) else { return errorJson("Unknown or closed MeshStream session: \(sessionId)") }; return encode(stats(value.statistics())) }
+  public static func getDiagnostics(_ clientId: String, _ sessionId: String) -> String { guard let value = session(clientId, sessionId) else { return errorJson("Unknown or closed MeshStream session: \(sessionId)") }; return encode(diagnostics(value.diagnostics())) }
 
   public static func closeSession(_ clientId: String, _ sessionId: String) {
     lock.lock()
@@ -99,16 +99,14 @@ public final class MeshStreamNative: NSObject {
     state.client.close()
   }
 
-  private static func client(_ clientId: String) throws -> ClientState {
+  private static func client(_ clientId: String) -> ClientState? {
     lock.lock(); defer { lock.unlock() }
-    guard let value = clients[clientId] else { throw NativeError("Unknown or closed MeshStream client: \(clientId)") }
-    return value
+    return clients[clientId]
   }
 
-  private static func session(_ clientId: String, _ sessionId: String) throws -> PlaybackSession {
+  private static func session(_ clientId: String, _ sessionId: String) -> PlaybackSession? {
     lock.lock(); defer { lock.unlock() }
-    guard let value = clients[clientId]?.sessions[sessionId] else { throw NativeError("Unknown or closed MeshStream session: \(sessionId)") }
-    return value
+    return clients[clientId]?.sessions[sessionId]
   }
 
   private static func receiveEvent(_ clientId: String, _ nativeId: String, _ event: [String: Any]) {
@@ -137,6 +135,7 @@ public final class MeshStreamNative: NSObject {
     guard let data = text.data(using: .utf8), let value = try JSONSerialization.jsonObject(with: data) as? [String: Any] else { throw NativeError("Invalid JSON options") }
     return value
   }
+  private static func errorJson(_ message: String) -> String { encode(["error": message]) }
   private static func encode(_ value: [String: Any]) -> String {
     guard let data = try? JSONSerialization.data(withJSONObject: value), let text = String(data: data, encoding: .utf8) else { return "{}" }
     return text

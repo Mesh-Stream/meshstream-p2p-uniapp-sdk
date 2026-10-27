@@ -27,7 +27,7 @@ object MeshStreamNative {
     private val mainHandler = Handler(Looper.getMainLooper())
     @Volatile private var eventListener: ((String) -> Unit)? = null
 
-    @JvmStatic fun getSdkVersion(): String = P2pSdk.version
+    @JvmStatic fun getSdkVersion(): String = P2pSdk.getSdkVersion()
 
     @JvmStatic fun setEventListener(listener: ((String) -> Unit)?) {
         eventListener = listener
