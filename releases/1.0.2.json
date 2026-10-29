@@ -1,20 +1,40 @@
 {
   "package": "meshstream-p2p",
   "version": "1.0.2",
-  "sourceRevision": "5d1bd7d",
+  "sourceRevision": "c5ecfdbe2e5605b81f1e21276b9f11ed1a7e1ee1",
   "nativeDependencies": {
-    "ios": {"pod": "MeshStreamKit", "version": "1.0.7", "minimumOS": "iOS 15.0 / macOS 12.0"},
-    "android": {"maven": "io.meshstream:meshstream-android-sdk", "version": "1.0.6", "minSdk": 24}
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.0.7",
+      "minimumOS": "iOS 15.0 / macOS 12.0"
+    },
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.0.6",
+      "minSdk": 24
+    }
   },
   "validation": {
-    "configuration": "passed",
-    "hbuilderx": "UTS extensions installed; Android runtime build blocked by generated Gradle repository resolution",
-    "iosRuntime": "pending",
-    "androidRuntime": "pending"
+    "configuration": "passed: official HBuilderX uni_modules --publish --dryRun",
+    "hbuilderx": "5.33.2026102401",
+    "androidUtsCompile": "passed with Gradle 8.10.2 / JDK 17 and scripts/hbuilderx-gradle.sh workaround",
+    "iosUtsCompile": "passed for x86_64 simulator; device/arm64 simulator UTS build pending",
+    "androidRuntime": "partial: local custom test host played video through SDK loopback proxy; initial telemetry refresh remained pending, so P2P, fallback, isolation and graceful close are not accepted",
+    "iosRuntime": "pending: bundled Uniapp simulator host is x86_64-only, simulator runtime is arm64-only; no signing identity available",
+    "report": "docs/validation/2026-10-30-uniapp-1.0.2-candidate.md"
   },
   "publication": {
-    "githubPush": "pending",
-    "dcloud": "pending",
+    "githubPush": "candidate changes committed locally; not pushed during preparation",
+    "gitTag": "not created",
+    "dcloud": "not submitted: user requested package preparation pending iOS base",
     "marketInstall": "pending"
+  },
+  "status": "prepared-candidate",
+  "artifact": {
+    "path": "marketplace-artifacts/meshstream-p2p-1.0.2-candidate.zip",
+    "sha256": "7e95a2fee06ac9adeec584f2f2f59f0a9c4719db5b8f0fe3b460d83570235a84",
+    "bytes": 19453,
+    "files": 15,
+    "format": "plugin files at ZIP root; no example or native binaries"
   }
 }
