@@ -5,7 +5,7 @@
   ],
   "project": {
     "repositories": [
-      "maven { url 'https://sdk.meshstream.net/maven' }"
+      "exclusiveContent { forRepository { maven { url 'https://sdk.meshstream.net/maven' } }; filter { includeGroup 'io.meshstream' } }"
     ]
   }
 }

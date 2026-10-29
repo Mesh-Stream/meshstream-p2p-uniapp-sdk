@@ -3,7 +3,13 @@
   "displayName": "MeshStream P2P",
   "version": "1.0.2",
   "description": "MeshStream P2P playback acceleration for uni-app App targets.",
-  "keywords": ["meshstream", "p2p", "cdn", "video", "uts"],
+  "keywords": [
+    "meshstream",
+    "p2p",
+    "cdn",
+    "video",
+    "uts"
+  ],
   "repository": "https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk.git",
   "license": "Apache-2.0",
   "uni_modules": {
@@ -12,11 +18,50 @@
     "platforms": {
       "cloud": {},
       "client": {
-        "App": {
-          "app-vue": "y",
-          "app-nvue": "y"
+        "uni-app": {
+          "vue": {
+            "vue2": "-",
+            "vue3": "√"
+          },
+          "app": {
+            "vue": "√",
+            "nvue": "-",
+            "android": "24",
+            "ios": "15.0",
+            "harmony": "-"
+          }
+        },
+        "uni-app-x": {
+          "app": {
+            "android": "-",
+            "ios": "-",
+            "harmony": "-"
+          }
         }
       }
+    }
+  },
+  "engines": {
+    "HBuilderX": "^4.25.0",
+    "uni-app": "^3.0.0"
+  },
+  "dcloudext": {
+    "type": "uts",
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "email": "meshstreamsupport@gmail.com"
+    },
+    "declaration": {
+      "permissions": "Android：INTERNET / ACCESS_NETWORK_STATE 网络访问；iOS：本地网络访问（用于媒体分片交换）。不访问相机、麦克风、通讯录或定位。",
+      "data": "MeshStream SDK 连接服务端进行 SDK Key 校验、配置获取、tracker 信令和用量统计，会处理应用标识、设备平台、IP/网络连接信息、内容及分片标识、下载/上传字节与诊断数据；不采集相机、麦克风、通讯录或精确定位数据。接入方需向用户说明 P2P 会使用网络和上行流量。",
+      "ads": "无广告"
     }
   }
 }

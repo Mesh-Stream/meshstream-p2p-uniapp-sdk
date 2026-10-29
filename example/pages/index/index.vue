@@ -138,7 +138,7 @@ async function refreshTelemetry() {
     MeshStream.getStats(activeClient.clientId, activeSession.sessionId),
     MeshStream.getDiagnostics(activeClient.clientId, activeSession.sessionId),
   ])
-  const nextStatus = await activeClient.getStatus()
+  const nextStatus = await MeshStream.getStatus(activeClient.clientId)
   if (client !== activeClient || session !== activeSession) return
   stats.value = nextStats
   diagnostics.value = nextDiagnostics

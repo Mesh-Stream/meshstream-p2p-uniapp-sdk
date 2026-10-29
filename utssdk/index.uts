@@ -10,6 +10,8 @@ import {
 } from './interface.uts'
 
 const eventListeners = new Array<MeshStreamEventListener>()
+const eventListenerIds = new Array<number>()
+let nextEventListenerId = 0
 let eventBridgeInstalled = false
 
 function parseObject(payload: string): UTSJSONObject {
@@ -168,10 +170,15 @@ export class MeshStream {
   @UTSJS.keepAlive
   static addEventListener(listener: MeshStreamEventListener): () => void {
     installEventBridge()
+    const listenerId = nextEventListenerId++
+    eventListenerIds.push(listenerId)
     eventListeners.push(listener)
     return () => {
-      const index = eventListeners.indexOf(listener)
-      if (index >= 0) eventListeners.splice(index, 1)
+      const index = eventListenerIds.indexOf(listenerId)
+      if (index >= 0) {
+        eventListenerIds.splice(index, 1)
+        eventListeners.splice(index, 1)
+      }
     }
   }
 }
