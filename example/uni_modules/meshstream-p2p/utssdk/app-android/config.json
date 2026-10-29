@@ -5,7 +5,7 @@
   ],
   "project": {
     "repositories": [
-      "maven { url 'https://pub-61830e1369904d19af505ff74fd55ba4.r2.dev/maven' }"
+      "maven { url 'https://sdk.meshstream.net/maven' }"
     ]
   }
 }
