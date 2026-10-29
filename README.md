@@ -5,7 +5,7 @@ MeshStream is a player-agnostic P2P playback accelerator for uni-app App targets
 ## Requirements
 
 - HBuilderX 4.25 or later, because the plugin uses UTS native mixed source.
-- uni-app App on Android API 24+ or iOS 13+.
+- uni-app App on Android API 24+ or iOS 15+.
 - A MeshStream key authorized for the target application's package name or bundle identifier.
 
 Web and mini-program targets are intentionally unsupported: they cannot load the Android or iOS MeshStream engine.
@@ -18,7 +18,7 @@ Copy this repository into the consumer application's `uni_modules/meshstream-p2p
 import { MeshStream } from '@/uni_modules/meshstream-p2p'
 ```
 
-The Android side resolves `io.meshstream:meshstream-android-sdk:1.0.4` from the MeshStream Maven repository. The iOS side resolves `MeshStreamKit` version `1.0.4` through CocoaPods. Native dependency changes require cloud packaging or a custom base; a stock base cannot validate them.
+The Android side resolves `io.meshstream:meshstream-android-sdk:1.0.6` from the MeshStream Maven repository. The iOS side resolves `MeshStreamKit` version `1.0.7` through CocoaPods. Native dependency changes require cloud packaging or a custom base; a stock base cannot validate them.
 
 ## Playback
 
