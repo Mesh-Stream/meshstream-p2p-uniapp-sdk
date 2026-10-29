@@ -1,7 +1,7 @@
 {
   "id": "meshstream-p2p",
   "displayName": "MeshStream P2P",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MeshStream P2P playback acceleration for uni-app App targets.",
   "keywords": ["meshstream", "p2p", "cdn", "video", "uts"],
   "repository": "https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk.git",
