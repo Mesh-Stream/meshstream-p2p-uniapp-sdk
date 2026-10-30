@@ -1,6 +1,6 @@
 # MeshStream P2P Uniapp SDK
 
-当前待发布版本：**1.0.2**。这是发布候选包，尚未上架 DCloud 插件市场。
+当前版本：**1.0.3**。1.0.2 已发布到 DCloud 插件市场；本版本将市场主说明、插件描述和变更记录统一为中文。
 
 ## 运行要求
 
@@ -16,7 +16,28 @@
 
 Vue/JavaScript 页面请使用 `import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'`。此入口在 JavaScript 中管理 Promise，通过 UTS 明确回传成功或错误，避免 HBuilderX 5.33 原生异步拒绝无法传回页面而卡住。UTS 调用方仍可导入模块根目录。
 
-参考英文说明和仓库示例，使用 `MeshStream` 静态 API 创建客户端和播放会话、上报位置及缓冲量、读取统计，结束时依次关闭会话和客户端。播放器使用 `session.playbackUrl`，源媒体使用 HTTPS。
+## 快速开始
+
+使用 `MeshStream` 静态 API 创建客户端和播放会话。播放器使用 `session.playbackUrl`，源媒体地址应使用 HTTPS：
+
+```ts
+import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'
+
+const client = await MeshStream.create({ key: 'key_你的 MeshStream Key', p2pEnabled: true })
+const session = await MeshStream.createPlaybackSession(client.clientId, {
+  url: 'https://cdn.example.com/live/playlist.m3u8',
+  contentId: 'live-channel-42',
+  mimeType: 'm3u8',
+})
+
+// 将 session.playbackUrl 绑定到现有 video 播放器。
+const eventId = MeshStream.subscribeEvents((event) => console.log('MeshStream 事件:', event))
+await MeshStream.updateCurrentPositionMs(client.clientId, session.sessionId, positionMs)
+await MeshStream.updateBufferedDurationMs(client.clientId, session.sessionId, bufferedDurationMs)
+MeshStream.unsubscribeEvents(eventId)
+await MeshStream.closeSession(client.clientId, session.sessionId)
+await MeshStream.closeClient(client.clientId)
+```
 
 Vue/JavaScript 页面不要直接调用返回对象上的实例方法。预加载使用 `await MeshStream.preload(client.clientId, session.sessionId)`，切换 P2P 使用 `await MeshStream.setP2pEnabled(client.clientId, session.sessionId, enabled)`。
 
@@ -24,7 +45,7 @@ Vue/JavaScript 页面不要直接调用返回对象上的实例方法。预加�
 
 ## 当前验收状态
 
-Android/iOS UTS 编译已通过。iOS 运行验收待完成：HBuilderX 5.33 自带的 Uniapp 模拟器基座只有 x86_64，当前 Apple Silicon 模拟器运行时仅支持 arm64。需要签名后的 iOS 真机自定义基座，或兼容 arm64 模拟器的自定义基座。编译通过不等于播放、P2P 和关闭流程验收通过。
+Android/iOS UTS 编译已通过。Uniapp iOS 已在真实 iPhone 上完成播放验收，确认本地代理、P2P 统计和 CDN 回退链路可用；Android 也已完成真机播放和 P2P 验收。HBuilderX 5.33 自带的 Uniapp 模拟器基座只有 x86_64，Apple Silicon 模拟器不能直接使用该基座，因此 iOS 模拟器验收仍需 arm64 自定义基座。
 
 ## Android 仓库解析
 

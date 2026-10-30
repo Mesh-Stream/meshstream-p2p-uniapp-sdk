@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+- 将 DCloud 市场主说明、插件描述和示例说明统一为中文。
+- 补充中文快速开始示例，以及真实 iOS/Android 真机验收状态。
+
 ## 1.0.2
 
 - Add static `preload` and `setP2pEnabled` helpers for Vue/JavaScript callers.
