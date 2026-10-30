@@ -54,7 +54,7 @@
 
 <script setup>
 import { computed, onBeforeUnmount, ref } from 'vue'
-import { MeshStream } from '@/uni_modules/meshstream-p2p'
+import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'
 
 const sdkKey = ref('')
 // Keep the native demo on the same stream as apps/web-demo so both clients
@@ -187,7 +187,7 @@ async function start() {
   try {
     await releaseResources()
     client = await MeshStream.create({ key: sdkKey.value.trim(), p2pEnabled: true })
-    removeEvents = MeshStream.addEventListener((event) => {
+    const subscriptionId = MeshStream.subscribeEvents((event) => {
       if (textField(event, 'clientId') !== client?.clientId) return
       if (textField(event, 'sessionId') !== session?.sessionId) return
       const type = textField(event, 'type') || 'event'
@@ -206,6 +206,7 @@ async function start() {
         appendLog(type === 'p2pUnavailable' ? `${type}: ${textField(event, 'reason')}` : type)
       }
     })
+    removeEvents = () => MeshStream.unsubscribeEvents(subscriptionId)
     session = await MeshStream.createPlaybackSession(client.clientId, {
       url: mediaUrl.value.trim(),
       ...(contentId.value.trim() ? { contentId: contentId.value.trim() } : {}),

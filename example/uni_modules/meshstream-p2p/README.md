@@ -16,10 +16,10 @@ Version 1.0.2 is a prepared release candidate, not a published DCloud market rel
 
 ## Installation
 
-Extract the prepared plugin ZIP into the consumer application's `uni_modules/meshstream-p2p` directory (with `package.json` directly under that directory). Do not copy `example/`, release records, or build caches into the module. Then import it from the module root:
+Extract the prepared plugin ZIP into the consumer application's `uni_modules/meshstream-p2p` directory (with `package.json` directly under that directory). Do not copy `example/`, release records, or build caches into the module. Vue/JavaScript pages use the JavaScript entry:
 
 ```ts
-import { MeshStream } from '@/uni_modules/meshstream-p2p'
+import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'
 ```
 
 The Android side resolves `io.meshstream:meshstream-android-sdk:1.0.6` from `https://sdk.meshstream.net/maven`. The iOS side resolves `MeshStreamKit` version `1.0.7` through CocoaPods. Native dependency changes require cloud packaging or a custom base; a stock base cannot validate them.
@@ -39,9 +39,10 @@ const session = await MeshStream.createPlaybackSession(client.clientId, {
 })
 
 // Bind session.playbackUrl to the application's existing video component.
-const stopEvents = MeshStream.addEventListener((event) => {
-  if (event.getString('type') == 'p2pUnavailable') {
-    console.warn('P2P unavailable:', event.getString('reason'))
+const subscriptionId = MeshStream.subscribeEvents((event) => {
+  const type = event.getString ? event.getString('type') : event.type
+  if (type === 'p2pUnavailable') {
+    console.warn('P2P unavailable:', event.getString ? event.getString('reason') : event.reason)
   }
 })
 
@@ -50,7 +51,7 @@ await MeshStream.updateCurrentPositionMs(client.clientId, session.sessionId, pos
 await MeshStream.updateBufferedDurationMs(client.clientId, session.sessionId, bufferedDurationMs)
 
 // Destroy in this order when playback ends.
-stopEvents()
+MeshStream.unsubscribeEvents(subscriptionId)
 await MeshStream.closeSession(client.clientId, session.sessionId)
 await MeshStream.closeClient(client.clientId)
 ```
@@ -62,6 +63,17 @@ Each client can own multiple independent sessions. Closing a session or client o
 Events contain `clientId`, `sessionId`, and a `type`: `peerCountChanged`, `playbackPrepared`, `p2pReady`, `p2pUnavailable`, `statistics`, `cdnFallback`, `trackerError`, or `peerConnectError`.
 
 Use the static `MeshStream` helpers from Vue/JavaScript code for session lifecycle and telemetry operations. This avoids an HBuilderX UTS instance-method proxy limitation observed on App builds. The instance methods remain available to UTS callers.
+
+The JavaScript entry owns the Promises and receives explicit success/error results from UTS. This also makes native failures reject reliably on HBuilderX 5.33, where direct native Promise rejection can leave a page waiting. UTS callers can continue importing the module root; Vue/JavaScript callers should use `javascript.js` for all operations.
+
+For events, use `subscribeEvents(callback)` and pass its numeric ID to `unsubscribeEvents(id)`. The JavaScript entry also provides `addEventListener(callback)` returning a JavaScript cleanup function. The legacy UTS helper's returned function cannot cross the Vue/JavaScript boundary reliably.
+
+```js
+await MeshStream.preload(client.clientId, session.sessionId)
+await MeshStream.setP2pEnabled(client.clientId, session.sessionId, false)
+// Release the session when the player is finished.
+await MeshStream.closeSession(client.clientId, session.sessionId)
+```
 
 `MeshStream.getStatus(clientId)`, `MeshStream.getStats(clientId, sessionId)`, and `MeshStream.getDiagnostics(clientId, sessionId)` return values with the same field names used by the React Native and Flutter SDKs. At the Vue/JavaScript boundary HBuilderX may materialize a `UTSJSONObject` as a plain object, so consumers should support either `getString` / `getNumber` accessors or normal object fields. The example app contains compatible field readers.
 

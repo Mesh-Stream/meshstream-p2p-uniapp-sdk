@@ -141,6 +141,14 @@ export class MeshStream {
     return parseObject(MeshStreamNative.getStats(clientId, sessionId)) as MeshStreamStats
   }
 
+  static async preload(clientId: string, sessionId: string): Promise<boolean> {
+    return MeshStreamNative.preload(clientId, sessionId)
+  }
+
+  static async setP2pEnabled(clientId: string, sessionId: string, enabled: boolean): Promise<void> {
+    MeshStreamNative.setP2pEnabled(clientId, sessionId, enabled)
+  }
+
   static async getDiagnostics(clientId: string, sessionId: string): Promise<MeshStreamDiagnostics> {
     return parseObject(MeshStreamNative.getDiagnostics(clientId, sessionId)) as MeshStreamDiagnostics
   }
@@ -167,18 +175,57 @@ export class MeshStream {
     MeshStreamNative.closeClient(clientId)
   }
 
+  static invoke(operation: string, args: UTSJSONObject, complete: (payload: string) => void): void {
+    let payload = ''
+    try {
+      const clientId = args.getString('clientId') ?? ''
+      const sessionId = args.getString('sessionId') ?? ''
+      let value: any | null = null
+      switch (operation) {
+        case 'getSdkVersion': value = MeshStreamNative.getSdkVersion(); break
+        case 'create':
+          installEventBridge()
+          value = parseObject(MeshStreamNative.createClient(args.getString('key') ?? '', args.getBoolean('p2pEnabled')))
+          break
+        case 'createPlaybackSession': value = parseObject(MeshStreamNative.createPlaybackSession(clientId, args.getString('optionsJson') ?? '{}')); break
+        case 'getStatus': value = parseObject(MeshStreamNative.getStatus(clientId)); break
+        case 'getStats': value = parseObject(MeshStreamNative.getStats(clientId, sessionId)); break
+        case 'getDiagnostics': value = parseObject(MeshStreamNative.getDiagnostics(clientId, sessionId)); break
+        case 'preload': value = MeshStreamNative.preload(clientId, sessionId); break
+        case 'setP2pEnabled': MeshStreamNative.setP2pEnabled(clientId, sessionId, args.getBoolean('enabled') ?? false); break
+        case 'updateCurrentPositionMs': MeshStreamNative.updateCurrentPositionMs(clientId, sessionId, Math.floor(args.getNumber('positionMs') ?? 0)); break
+        case 'updateBufferedDurationMs': MeshStreamNative.updateBufferedDurationMs(clientId, sessionId, Math.floor(args.getNumber('durationMs') ?? 0)); break
+        case 'closeSession': MeshStreamNative.closeSession(clientId, sessionId); break
+        case 'closeClient': MeshStreamNative.closeClient(clientId); break
+        default: throw new Error('Unknown MeshStream operation: ' + operation)
+      }
+      payload = JSON.stringify({ ok: true, value: value })!
+    } catch (error) {
+      payload = JSON.stringify({ ok: false, error: error.message })!
+    }
+    complete(payload)
+  }
+
   @UTSJS.keepAlive
-  static addEventListener(listener: MeshStreamEventListener): () => void {
+  static subscribeEvents(listener: MeshStreamEventListener): number {
     installEventBridge()
     const listenerId = nextEventListenerId++
     eventListenerIds.push(listenerId)
     eventListeners.push(listener)
-    return () => {
-      const index = eventListenerIds.indexOf(listenerId)
-      if (index >= 0) {
-        eventListenerIds.splice(index, 1)
-        eventListeners.splice(index, 1)
-      }
+    return listenerId
+  }
+
+  static unsubscribeEvents(listenerId: number): void {
+    const index = eventListenerIds.indexOf(listenerId)
+    if (index >= 0) {
+      eventListenerIds.splice(index, 1)
+      eventListeners.splice(index, 1)
     }
+  }
+
+  @UTSJS.keepAlive
+  static addEventListener(listener: MeshStreamEventListener): () => void {
+    const listenerId = MeshStream.subscribeEvents(listener)
+    return () => { MeshStream.unsubscribeEvents(listenerId) }
   }
 }

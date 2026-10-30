@@ -46,6 +46,8 @@ def main():
         "CHANGELOG.md": "changelog.md",
         "LICENSE.md": "LICENSE.md",
         "scripts/hbuilderx-gradle.sh": "scripts/hbuilderx-gradle.sh",
+        "javascript.js": "javascript.js",
+        "javascript-bridge.js": "javascript-bridge.js",
     }
     allowed = {".uts", ".kt", ".swift", ".json", ".xml", ".plist"}
     for item in sorted((source / "utssdk").rglob("*")):

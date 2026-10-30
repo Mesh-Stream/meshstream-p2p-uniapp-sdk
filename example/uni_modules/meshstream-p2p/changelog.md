@@ -2,6 +2,9 @@
 
 ## 1.0.2
 
+- Add static `preload` and `setP2pEnabled` helpers for Vue/JavaScript callers.
+- Add numeric event subscriptions for Vue/JavaScript and use them in the demo so cleanup does not depend on a returned UTS function.
+- Add a JavaScript Promise adapter with explicit UTS result callbacks so native errors reach page catch handlers on HBuilderX 5.33.
 - Fix the Android UTS Maven repository to use the canonical public endpoint.
 - Restrict the SDK group to its public Maven repository and document the HBuilderX 5.33 repository workaround.
 - Fix iOS UTS event unsubscription by comparing subscription IDs instead of callback functions.

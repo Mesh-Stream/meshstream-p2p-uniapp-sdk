@@ -14,7 +14,13 @@
 
 将插件 ZIP 内的文件解压到应用的 `uni_modules/meshstream-p2p/`，确保 `package.json` 直接位于该目录下。不要将仓库的 `example/`、发行记录或编译缓存复制到模块内。
 
+Vue/JavaScript 页面请使用 `import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'`。此入口在 JavaScript 中管理 Promise，通过 UTS 明确回传成功或错误，避免 HBuilderX 5.33 原生异步拒绝无法传回页面而卡住。UTS 调用方仍可导入模块根目录。
+
 参考英文说明和仓库示例，使用 `MeshStream` 静态 API 创建客户端和播放会话、上报位置及缓冲量、读取统计，结束时依次关闭会话和客户端。播放器使用 `session.playbackUrl`，源媒体使用 HTTPS。
+
+Vue/JavaScript 页面不要直接调用返回对象上的实例方法。预加载使用 `await MeshStream.preload(client.clientId, session.sessionId)`，切换 P2P 使用 `await MeshStream.setP2pEnabled(client.clientId, session.sessionId, enabled)`。
+
+事件使用 `const id = MeshStream.subscribeEvents(callback)` 注册，再用 `MeshStream.unsubscribeEvents(id)` 取消。JavaScript 入口也支持 `addEventListener` 返回本地取消函数；旧的 UTS 入口返回函数无法可靠跨越 Vue/JavaScript 边界。
 
 ## 当前验收状态
 
