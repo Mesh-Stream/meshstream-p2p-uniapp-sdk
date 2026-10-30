@@ -1,0 +1,39 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.0.3",
+  "sourceRevision": "322d40041902390f7862cd98aab0e4a543a348e9",
+  "nativeDependencies": {
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.0.7",
+      "minimumOS": "iOS 15.0 / macOS 12.0"
+    },
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.0.6",
+      "minSdk": 24
+    }
+  },
+  "validation": {
+    "configuration": "passed: official HBuilderX uni_modules --publish --dryRun",
+    "hbuilderx": "5.33.2026102401",
+    "javascriptBridgeTests": "passed: 5 tests",
+    "androidRuntime": "passed: real-device playback, P2P statistics and CDN fallback",
+    "iosRuntime": "passed: real-device playback, local proxy and P2P statistics",
+    "report": "docs/validation/2026-10-30-uniapp-1.0.2-candidate.md"
+  },
+  "publication": {
+    "githubPush": "pending",
+    "gitTag": "pending",
+    "dcloud": "pending",
+    "marketInstall": "pending"
+  },
+  "status": "prepared",
+  "artifact": {
+    "path": ".runtime/uniapp-release-20261031-cn/meshstream-p2p-1.0.3.zip",
+    "sha256": "9d3fa7a320770e1a5fdd9e4366d36d62e7413f22780ed193f0304d9f0e513d75",
+    "bytes": 21969,
+    "files": 17,
+    "format": "plugin files at ZIP root; no example or native binaries"
+  }
+}
