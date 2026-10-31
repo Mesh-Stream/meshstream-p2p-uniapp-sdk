@@ -1,9 +1,10 @@
 # Changelog
 
-## 1.0.3
+## 1.0.4
 
-- 将 DCloud 市场主说明、插件描述和示例说明统一为中文。
-- 补充中文快速开始示例，以及真实 iOS/Android 真机验收状态。
+- Upgrade the public iOS dependency to MeshStreamKit 1.0.8 (iOS 15+).
+- Upgrade the public Android dependency to meshstream-android-sdk 1.0.7.
+- Align the Uniapp bridge with the native SDK shutdown and proxy connection cleanup fix.
 
 ## 1.0.2
 

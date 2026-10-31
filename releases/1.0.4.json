@@ -1,0 +1,30 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.0.4",
+  "sourceRevision": "2cc8614",
+  "nativeDependencies": {
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.0.8",
+      "minimumOS": "iOS 15.0 / macOS 12.0"
+    },
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.0.7",
+      "minSdk": 24
+    }
+  },
+  "validation": {
+    "configuration": "passed: HBuilderX CLI uni_modules --publish --dryRun",
+    "javascriptBridgeTests": "passed: 5 tests",
+    "androidRuntime": "pending: public Maven build and device acceptance",
+    "iosRuntime": "pending: public CocoaPods build and device acceptance"
+  },
+  "publication": {
+    "githubPush": "pending",
+    "gitTag": "pending",
+    "dcloud": "published: https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "marketInstall": "pending: verify exact 1.0.4 from DCloud"
+  },
+  "status": "published-dcloud-pending-github"
+}

@@ -1,13 +1,13 @@
 # MeshStream P2P Uniapp SDK
 
-当前版本：**1.0.3**。1.0.2 已发布到 DCloud 插件市场；本版本将市场主说明、插件描述和变更记录统一为中文。
+当前版本：**1.0.4**。1.0.2 已发布到 DCloud 插件市场；本版本将市场主说明、插件描述和变更记录统一为中文。
 
 ## 运行要求
 
 - HBuilderX 4.25+、uni-app Vue 3 App；当前候选验证使用 HBuilderX 5.33。
 - Android 7.0 / API 24+；iOS 15+。
-- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.6`，Maven 地址 `https://sdk.meshstream.net/maven`。
-- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.7`。两个平台 native 运行时版本返回 `1.0.6`，与 Apple 分发版本不同是预期行为。
+- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.7`，Maven 地址 `https://sdk.meshstream.net/maven`。
+- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.8`。两个平台 native 运行时版本返回 `1.0.7`。
 - 使用自定义基座或云打包；标准基座无法包含本插件所需的原生 SDK 和配置。
 
 ## 安装与接入

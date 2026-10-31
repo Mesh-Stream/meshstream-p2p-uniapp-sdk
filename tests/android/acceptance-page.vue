@@ -20,7 +20,7 @@ async function segment(list,source,i){const data=await req(list[i],{responseType
 onMounted(async()=>{
  const runId='uniapp-android-'+Date.now();let a,b,c,sa,sb,sc,al,bl,cl,initialEvents
  try{
-  check('native-version',(await call('version',()=>MeshStream.getSdkVersion()))==='1.0.6')
+  check('native-version',(await call('version',()=>MeshStream.getSdkVersion()))==='1.0.7')
   a=await client(true)
   const subscriptionId=MeshStream.subscribeEvents(e=>{eventCount++;const value=obj(e);if(value.type!=='statistics')log('sdk-event',value)});remove=()=>MeshStream.unsubscribeEvents(subscriptionId)
   const url=base+'/index.m3u8', source=uris(await req(url))
