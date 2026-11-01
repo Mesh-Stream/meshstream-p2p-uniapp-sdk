@@ -1,0 +1,46 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.0.5",
+  "nativeDependencies": {
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.0.8",
+      "minSdk": 21,
+      "abi": [
+        "armeabi-v7a",
+        "arm64-v8a"
+      ]
+    },
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.0.8",
+      "runtimeVersion": "1.0.7",
+      "minimumOS": "iOS 15.0"
+    }
+  },
+  "compatibility": {
+    "effectiveMinimum": "max(plugin, framework/runtime, player)",
+    "minimumApiDeviceAcceptance": "pending",
+    "exampleMinSdk": 24
+  },
+  "validation": {
+    "javascriptTests": "passed: 5 tests",
+    "marketplaceDryRun": "passed",
+    "androidUts": "passed: official HBuilderX UTS to Kotlin to JAR and DEX, public Maven 1.0.8",
+    "iosUts": "passed: official HBuilderX UTS to Swift to arm64 iOS framework; minOS 15.0, public CocoaPods 1.0.8",
+    "androidDevice": "pending: no connected device",
+    "iosDevice": "pending: no connected device",
+    "api21Device": "pending"
+  },
+  "publication": {
+    "github": "release source for main and tag 1.0.5",
+    "dcloud": "pending",
+    "marketInstall": "pending"
+  },
+  "status": "candidate validated; marketplace publication pending",
+  "artifact": {
+    "file": "meshstream-p2p-1.0.5-final.zip",
+    "sha256": "ff1891de43cc9834d511e2de856c1542f1dfc45f190696f7fed43849ea480fc0",
+    "bytes": 22426
+  }
+}

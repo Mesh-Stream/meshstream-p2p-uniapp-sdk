@@ -1,7 +1,7 @@
 {
   "id": "meshstream-p2p",
   "displayName": "MeshStream P2P",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "面向 uni-app App 的 MeshStream P2P 播放加速插件，支持本地代理、P2P 传输和 CDN 回退。",
   "keywords": [
     "meshstream",
@@ -26,7 +26,7 @@
           "app": {
             "vue": "√",
             "nvue": "-",
-            "android": "24",
+            "android": "21",
             "ios": "15.0",
             "harmony": "-"
           }

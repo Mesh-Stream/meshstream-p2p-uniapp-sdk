@@ -37,20 +37,26 @@ function installEventBridge(): void {
 }
 
 export class MeshStreamPlaybackSession {
-  readonly clientId: string
-  readonly sessionId: string
-  readonly playbackUrl: string
-  readonly playbackMode: MeshStreamPlaybackMode
-  readonly fallbackReason: string | null
+  private clientIdValue: string
+  private sessionIdValue: string
+  private playbackUrlValue: string
+  private playbackModeValue: MeshStreamPlaybackMode
+  private fallbackReasonValue: string | null
+
+  get clientId(): string { return this.clientIdValue }
+  get sessionId(): string { return this.sessionIdValue }
+  get playbackUrl(): string { return this.playbackUrlValue }
+  get playbackMode(): MeshStreamPlaybackMode { return this.playbackModeValue }
+  get fallbackReason(): string | null { return this.fallbackReasonValue }
   private closed = false
 
   constructor(info: UTSJSONObject) {
-    this.clientId = info.getString('clientId') as string
-    this.sessionId = info.getString('sessionId') as string
-    this.playbackUrl = info.getString('playbackUrl') as string
-    this.playbackMode = info.getString('playbackMode') as MeshStreamPlaybackMode
+    this.clientIdValue = info.getString('clientId') as string
+    this.sessionIdValue = info.getString('sessionId') as string
+    this.playbackUrlValue = info.getString('playbackUrl') as string
+    this.playbackModeValue = info.getString('playbackMode') as MeshStreamPlaybackMode
     const rawFallbackReason = info.getString('fallbackReason')
-    this.fallbackReason = rawFallbackReason == null ? null : (rawFallbackReason as string)
+    this.fallbackReasonValue = rawFallbackReason == null ? null : (rawFallbackReason as string)
   }
 
   async preload(): Promise<boolean> {
@@ -94,10 +100,11 @@ export class MeshStreamPlaybackSession {
 }
 
 export class MeshStreamClient {
-  readonly clientId: string
+  private clientIdValue: string
+  get clientId(): string { return this.clientIdValue }
   private closed = false
 
-  constructor(clientId: string) { this.clientId = clientId }
+  constructor(clientId: string) { this.clientIdValue = clientId }
 
   async createPlaybackSession(options: PlaybackSessionOptions): Promise<MeshStreamPlaybackSession> {
     this.assertOpen(); requireText(options.url, 'options.url')

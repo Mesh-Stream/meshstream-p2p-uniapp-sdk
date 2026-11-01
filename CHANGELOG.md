@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5 - 2026-11-01
+
+- 修复新版 UTS/Kotlin 编译器的只读属性初始化错误，公开属性保持只读。
+- 升级 Android 公共依赖至 meshstream-android-sdk 1.0.8，沿用 iOS MeshStreamKit 1.0.8。
+- 将插件 Android 声明下限从 API 24 调整为 API 21，应用仍需满足框架和播放器要求。
+- 区分插件声明下限、示例构建目标与真机验收范围；API 21 真机验收待完成。
+
 ## 1.0.4
 
 - Upgrade the public iOS dependency to MeshStreamKit 1.0.8 (iOS 15+).
