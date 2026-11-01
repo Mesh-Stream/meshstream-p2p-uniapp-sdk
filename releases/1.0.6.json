@@ -1,0 +1,42 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.0.6",
+  "nativeDependencies": {
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.0.9",
+      "minSdk": 21,
+      "abi": [
+        "armeabi-v7a",
+        "arm64-v8a",
+        "x86",
+        "x86_64"
+      ],
+      "aarSha256": "05fe7f9e588cc893e61a34e6e6be410cfb06b47a8e0c692b78e7be2c85d60a43"
+    },
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.0.8",
+      "runtimeVersion": "1.0.7",
+      "minimumOS": "iOS 15.0"
+    }
+  },
+  "compatibility": {
+    "effectiveMinimum": "max(plugin, framework/runtime, player)",
+    "exampleMinSdk": 24
+  },
+  "validation": {
+    "javascriptTests": "passed: 5 tests",
+    "marketplaceDryRun": "passed",
+    "androidUts": "passed: official HBuilderX UTS/Kotlin to JAR and DEX, public Maven 1.0.9",
+    "iosUts": "passed: official HBuilderX UTS/Swift to arm64 iOS framework, minOS 15.0, public CocoaPods 1.0.8"
+  },
+  "publication": {},
+  "status": "validated candidate",
+  "artifact": {
+    "file": "meshstream-p2p-1.0.6-final.zip",
+    "sha256": "dc6e2fb1d545841cf55da398ff54a401c86601b05d43ca6fa10091a7dff4f0df",
+    "bytes": 22191,
+    "kind": "verified local candidate ZIP; DCloud may rewrite changelog when publishing"
+  }
+}

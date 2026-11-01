@@ -1,13 +1,15 @@
 # MeshStream P2P Uniapp SDK
 
-当前版本：**1.0.5**。升级 Android 原生 SDK 至 1.0.8，并将插件 Android 声明下限调整为 API 21。
+当前版本：**1.0.6**。升级 Android 原生 SDK 至 1.0.9，包含真机与模拟器所需的四种 ABI。
 
 ## 运行要求
 
-- HBuilderX 4.25+、uni-app Vue 3 App；当前候选验证使用 HBuilderX 5.34。
-- 插件 Android 声明下限为 Android 5.0 / API 21；iOS 15+。应用实际下限取插件、HBuilderX 基座及播放器要求的最大值；示例仍以 API 24 构建。API 21 真机验收待完成。
-- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.8`，Maven 地址 `https://sdk.meshstream.net/maven`。
-- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.8`。Android native 运行时版本为 `1.0.8`，iOS 1.0.8 发行包的 native 运行时版本为 `1.0.7`。
+Android 依赖包含 `armeabi-v7a`、`arm64-v8a`、`x86` 和 `x86_64`，可用于相应架构的真机与模拟器；应用仍需满足框架、基座及播放器的系统和架构要求。
+
+- HBuilderX 4.25+、uni-app Vue 3 App。
+- 插件 Android 声明下限为 Android 5.0 / API 21；iOS 15+。应用实际下限取插件、HBuilderX 基座及播放器要求的最大值；示例以 API 24 构建。
+- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.9`，Maven 地址 `https://sdk.meshstream.net/maven`。
+- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.8`。Android native 运行时版本为 `1.0.9`，iOS 1.0.8 发行包的 native 运行时版本为 `1.0.7`。
 - 使用自定义基座或云打包；标准基座无法包含本插件所需的原生 SDK 和配置。
 
 ## 安装与接入
@@ -43,9 +45,9 @@ Vue/JavaScript 页面不要直接调用返回对象上的实例方法。预加�
 
 事件使用 `const id = MeshStream.subscribeEvents(callback)` 注册，再用 `MeshStream.unsubscribeEvents(id)` 取消。JavaScript 入口也支持 `addEventListener` 返回本地取消函数；旧的 UTS 入口返回函数无法可靠跨越 Vue/JavaScript 边界。
 
-## 当前验收状态
+## iOS 模拟器
 
-历史版本已完成 Android/iOS 真机播放和 P2P 验证。本次 1.0.5 修复了新版 UTS/Kotlin 编译器对只读属性的编译兼容性，公开属性仍保持只读。构建与运行状态单独记录于仓库 `releases/1.0.5.json`，不沿用历史运行结果；本次真机验收待完成。HBuilderX 5.33 自带的 Uniapp 模拟器基座只有 x86_64，Apple Silicon 模拟器不能直接使用该基座，因此 iOS 模拟器验收仍需 arm64 自定义基座。
+iOS 模拟器调试需要与模拟器架构匹配的自定义基座：Apple Silicon 使用 arm64，Intel Mac 使用 x86_64。
 
 ## Android 仓库解析
 
