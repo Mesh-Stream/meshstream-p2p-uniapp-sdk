@@ -29,18 +29,23 @@
     "androidUts": "passed: official HBuilderX UTS to Kotlin to JAR and DEX, public Maven 1.0.8",
     "iosUts": "passed: official HBuilderX UTS to Swift to arm64 iOS framework; minOS 15.0, public CocoaPods 1.0.8",
     "androidDevice": "pending: no connected device",
-    "iosDevice": "pending: no connected device",
-    "api21Device": "pending"
+    "iosDevice": "pending: wireless paired iPhone locked; runtime acceptance not performed",
+    "api21Device": "pending",
+    "marketPublicInstall": "passed: official exact version 1.0.5 download; 16/17 candidate files identical; only official --changeLog formatting differs",
+    "marketAndroidUts": "passed: downloaded 1.0.5 compiled with official UTS/Kotlin compiler to JAR and DEX",
+    "marketIosUts": "passed: downloaded 1.0.5 compiled with official UTS/Swift compiler to arm64 iOS framework, minimum iOS 15.0"
   },
   "publication": {
-    "github": "release source for main and tag 1.0.5",
-    "dcloud": "pending",
-    "marketInstall": "pending"
+    "github": "main and tag 1.0.5",
+    "dcloud": "published: https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "marketInstall": "verified: official CLI exact version 1.0.5 download and dual-platform UTS compilation"
   },
-  "status": "candidate validated; marketplace publication pending",
+  "status": "published; device acceptance pending",
   "artifact": {
     "file": "meshstream-p2p-1.0.5-final.zip",
     "sha256": "ff1891de43cc9834d511e2de856c1542f1dfc45f190696f7fed43849ea480fc0",
-    "bytes": 22426
+    "bytes": 22426,
+    "kind": "verified local candidate ZIP; DCloud rewrites the release changelog during official upload",
+    "marketFileManifestSha256": "617ac57d8bf7768cf3a3d312eab62e2f1f67ba7d00b1b0876957e661374d69be"
   }
 }
