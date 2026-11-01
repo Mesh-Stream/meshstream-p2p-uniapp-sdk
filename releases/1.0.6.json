@@ -29,14 +29,22 @@
     "javascriptTests": "passed: 5 tests",
     "marketplaceDryRun": "passed",
     "androidUts": "passed: official HBuilderX UTS/Kotlin to JAR and DEX, public Maven 1.0.9",
-    "iosUts": "passed: official HBuilderX UTS/Swift to arm64 iOS framework, minOS 15.0, public CocoaPods 1.0.8"
+    "iosUts": "passed: official HBuilderX UTS/Swift to arm64 iOS framework, minOS 15.0, public CocoaPods 1.0.8",
+    "marketPublicInstall": "passed: official CLI exact version 1.0.6; all 17 plugin files match publication staging",
+    "marketAndroidUts": "passed: installed market plugin compiled to JAR and DEX with public Maven 1.0.9",
+    "marketIosUts": "passed: installed market plugin compiled to arm64 iOS framework, minimum iOS 15.0, public CocoaPods 1.0.8"
   },
-  "publication": {},
-  "status": "validated candidate",
+  "publication": {
+    "github": "main and tag 1.0.6",
+    "dcloud": "published: https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "marketInstall": "verified: exact 1.0.6 download and dual-platform UTS compilation"
+  },
+  "status": "published",
   "artifact": {
     "file": "meshstream-p2p-1.0.6-final.zip",
     "sha256": "dc6e2fb1d545841cf55da398ff54a401c86601b05d43ca6fa10091a7dff4f0df",
     "bytes": 22191,
-    "kind": "verified local candidate ZIP; DCloud may rewrite changelog when publishing"
+    "kind": "verified local candidate ZIP; DCloud may rewrite changelog when publishing",
+    "marketFileManifestSha256": "759131c76dd21d777c09a14ab63df449ed231442481867f2fc3ffd1b817493b1"
   }
 }
