@@ -1,6 +1,6 @@
 # MeshStream P2P Uniapp SDK
 
-当前版本：**1.0.6**。升级 Android 原生 SDK 至 1.0.9，包含真机与模拟器所需的四种 ABI。
+当前版本：**1.0.7**。iOS 和 Android 原生 SDK 均升级至 1.0.10。Android 包含真机与模拟器所需的四种 ABI。
 
 ## 运行要求
 
@@ -8,8 +8,8 @@ Android 依赖包含 `armeabi-v7a`、`arm64-v8a`、`x86` 和 `x86_64`，可用�
 
 - HBuilderX 4.25+、uni-app Vue 3 App。
 - 插件 Android 声明下限为 Android 5.0 / API 21；iOS 15+。应用实际下限取插件、HBuilderX 基座及播放器要求的最大值；示例以 API 24 构建。
-- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.9`，Maven 地址 `https://sdk.meshstream.net/maven`。
-- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.8`。Android native 运行时版本为 `1.0.9`，iOS 1.0.8 发行包的 native 运行时版本为 `1.0.7`。
+- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.10`，Maven 地址 `https://sdk.meshstream.net/maven`。
+- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.10`。Android 和 iOS native 运行时版本均为 `1.0.10`。
 - 使用自定义基座或云打包；标准基座无法包含本插件所需的原生 SDK 和配置。
 
 ## 安装与接入

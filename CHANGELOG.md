@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7 - 2026-11-09
+
+- 将 iOS MeshStreamKit 和 Android 原生依赖统一升级至 1.0.10。
+- 保持 Android API 21+、iOS 15+ 及 Android 四种 ABI 支持。
+- 同步双端依赖配置、版本检查和接入说明。
+
 ## 1.0.6 - 2026-11-01
 
 - 升级 Android 原生依赖至 1.0.9，包含 armeabi-v7a、arm64-v8a、x86、x86_64 四种 ABI。

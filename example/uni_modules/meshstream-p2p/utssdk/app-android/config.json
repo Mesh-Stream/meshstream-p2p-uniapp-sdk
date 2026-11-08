@@ -1,7 +1,7 @@
 {
   "minSdkVersion": 21,
   "dependencies": [
-    "io.meshstream:meshstream-android-sdk:1.0.9"
+    "io.meshstream:meshstream-android-sdk:1.0.10"
   ],
   "project": {
     "repositories": [
