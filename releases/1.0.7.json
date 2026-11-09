@@ -37,15 +37,25 @@
     },
     "bridgeTestsPassed": 5,
     "marketplacePackage": "prepared",
-    "p2pTransfer": "not-verified"
+    "p2pTransfer": "not-verified",
+    "publicExactVersionInstall": "passed",
+    "publicMarketFilesMatchCandidate": 17,
+    "publicAndroidUtsCompilation": "passed",
+    "publicIOSUtsDeviceCompilation": "passed"
   },
   "publication": {
-    "status": "not-published"
+    "status": "published",
+    "channel": "DCloud",
+    "version": "1.0.7",
+    "date": "2026-11-09",
+    "url": "https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "marketSourceFilesMatchCandidate": true
   },
-  "status": "local-candidate",
+  "status": "published",
   "artifact": {
     "filename": "meshstream-p2p-1.0.7.zip",
     "sha256": "8ba2728b1eef7ba8141df559982e4198a1f3985b1d5c0a517cde0702f4a82515",
-    "bytes": 22269
+    "bytes": 22269,
+    "purpose": "validated-candidate"
   }
 }
