@@ -1,6 +1,19 @@
-# MeshStream P2P Uniapp SDK
+# MeshStream P2P uni-app SDK
 
-当前版本：**1.0.7**。iOS 和 Android 原生 SDK 均升级至 1.0.10。Android 包含真机与模拟器所需的四种 ABI。
+[English](README.md) · [官网](https://meshstream.net/zh/) · [接入文档](https://meshstream.net/zh/docs/sdk/uniapp-setup/) · [DCloud 插件市场](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p) · [在线 Demo](https://demo.meshstream.net/)
+
+MeshStream 是面向 Android 和 iOS App 的 uni-app P2P 视频与音频流媒体插件。它通过统一的 UTS / JavaScript client/session API 提供现有播放器可使用的本地播放地址、Peer 事件和流量统计，并支持 HTTP/CDN 回退。
+
+当前插件版本：**1.0.7**；双端原生 SDK 版本：**1.0.10**。
+
+## 产品能力
+
+- 通过原生 SDK 接入 HLS、MPEG-DASH 和支持 HTTP Range 的 MP4/MP3。
+- 面向 uni-app Vue 3 App 与 HBuilderX，可配合已有 video 播放器使用。
+- 支持预加载、播放位置与缓冲回传、Peer 事件和 P2P/CDN 统计。
+- 通过 DCloud 插件市场安装，原生依赖使用公开 Maven 与 CocoaPods。
+
+媒体解码与格式兼容性取决于所选播放器和平台；P2P 可用性取决于网络条件及持有相同内容的 Peer。
 
 ## 运行要求
 
@@ -14,7 +27,7 @@ Android 依赖包含 `armeabi-v7a`、`arm64-v8a`、`x86` 和 `x86_64`，可用�
 
 ## 安装与接入
 
-将已发布插件 ZIP 内的文件解压到应用的 `uni_modules/meshstream-p2p/`，确保 `package.json` 直接位于该目录下。
+从 [DCloud 插件市场](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p)安装，或将已发布插件 ZIP 内的文件解压到应用的 `uni_modules/meshstream-p2p/`，确保 `package.json` 直接位于该目录下。
 
 Vue/JavaScript 页面请使用 `import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'`。此入口在 JavaScript 中管理 Promise，通过 UTS 明确回传成功或错误，避免 HBuilderX 5.33 原生异步拒绝无法传回页面而卡住。UTS 调用方仍可导入模块根目录。
 
@@ -51,8 +64,17 @@ iOS 模拟器调试需要与模拟器架构匹配的自定义基座：Apple Sili
 
 ## Android 仓库解析
 
-HBuilderX 5.33 临时 Gradle 工程使用 `PREFER_SETTINGS`，会忽略插件配置里的 Maven 仓库。若提示找不到 SDK，可按英文 README 配置 `scripts/hbuilderx-gradle.sh` 和实际 Gradle 可执行文件，仅对 HBuilderX 临时依赖解析工程启用 `PREFER_PROJECT`。插件会按公开 Maven 坐标解析已发布的原生 SDK。
+HBuilderX 5.33 临时 Gradle 工程使用 `PREFER_SETTINGS`，会忽略插件配置里的 Maven 仓库。若提示找不到 SDK，可按[英文说明的 Android 仓库解析步骤](README.md#android-repository-resolution)配置 `scripts/hbuilderx-gradle.sh` 和实际 Gradle 可执行文件，仅对 HBuilderX 临时依赖解析工程启用 `PREFER_PROJECT`。插件会按公开 Maven 坐标解析已发布的原生 SDK。
 
 ## 网络与隐私
 
 SDK Key 校验、配置获取、tracker 和用量上报会处理应用标识、设备平台、IP/网络连接信息、内容及分片标识、上下行流量和诊断数据。接入方应告知用户 P2P 会使用上行网络流量。不读取相机、麦克风、通讯录或精确定位，无广告。HTTP 明文访问仅对本机代理 `127.0.0.1` / `localhost` 开放。
+
+## 其他 MeshStream SDK
+
+- [Web](https://github.com/Mesh-Stream/meshstream-p2p-web-sdk): JavaScript / TypeScript 与浏览器播放器.
+- [iOS / macOS](https://github.com/Mesh-Stream/meshstream-p2p-ios-sdk): MeshStreamKit、Swift / Objective-C、SPM 与 CocoaPods.
+- [Android](https://github.com/Mesh-Stream/meshstream-p2p-android-sdk): Kotlin / Java、Maven 与 Media3 / ExoPlayer.
+- [Windows](https://github.com/Mesh-Stream/meshstream-p2p-Windows-sdk): Windows 10 / 11 x64 C / C++ 接口.
+- [Flutter](https://github.com/Mesh-Stream/meshstream-p2p-flutter-sdk): 面向 iOS / Android 的 Dart 插件.
+- [React Native](https://github.com/Mesh-Stream/meshstream-p2p-react-native-sdk): 面向 iOS / Android 的 JavaScript / TypeScript API.
