@@ -1,0 +1,37 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.1.0",
+  "published": "2026-11-12",
+  "channel": "DCloud",
+  "url": "https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+  "nativeVersions": {
+    "android": "1.1.0",
+    "ios": "1.1.0"
+  },
+  "gitTag": "1.1.0",
+  "gitTagRevision": "822aed3e3d336cb54977b7a28ad18e6fd89c86ab",
+  "verification": {
+    "publicPageVersion": "1.1.0",
+    "marketExactVersionDownload": true,
+    "sourceFilesMatched": 17
+  },
+  "files": {
+    "LICENSE.md": "da77fbb99e2a86d8113f04f7a81389da888ff4a33b337dab55c10bfcee5513d5",
+    "changelog.md": "4104bb9f81e93916c0846a50fce30ba4e873816a8098c03a3d7eb1838f8dfb6e",
+    "readme.md": "d871a8cb8650cfa06040e080ac607a96a4e87623232104b69c8c2d4052b524e5",
+    "javascript.js": "e83f161f44b1c86a48ec7317d088edef2e2751c0c981a8e877760bd877df9385",
+    "package.json": "ea78cc0b4da09483666e1254bc1128fa28bd5d2e71b5d716fde070fd46ac27ac",
+    "README.zh-CN.md": "db11de592ab88ae8b9bd03803c5ef2a9698cab74ce9c5add846a5dd7e6e56fe2",
+    "javascript-bridge.js": "6e28c9f04d47d313d819011cde4c43b4a590c1f56b9395a3788f432ccd4c15f9",
+    "utssdk/index.uts": "99e62e793c9878ccd8e1e6455010c3ffa0890d5da798a0b81e67f05dac11ec34",
+    "utssdk/interface.uts": "d762a0145bde2755734e19dbb22ab95f9a6f68526760ecb55ee75366d5662f72",
+    "utssdk/app-android/config.json": "9aa2c2e88d6a5ac0a964452c1444fd8a5ed839dc2fd52df12099b6905bd8510e",
+    "utssdk/app-android/AndroidManifest.xml": "31a125b59fc35b8c7b859651545a5f809e4c3ac9928aa81cb679c579071e9179",
+    "utssdk/app-android/MeshStreamNative.kt": "5ebd35e78276f1bbde053d76dcf2da03e49262cbfa41269015b75e10361c6260",
+    "utssdk/app-android/res/xml/meshstream_network_security_config.xml": "a68716c3ff03716c198b3322328b8beec8058711114fb5daf90bdb977d1fb974",
+    "utssdk/app-ios/config.json": "f7edd8a1d9eea1cd002e496fa7b19cf272eb51df8fadc502b65ae45e5497a77d",
+    "utssdk/app-ios/MeshStreamNative.swift": "f444f3f5fc60ef5a4ad9bfce3c286301116cce5f167f3e52ad2ac74689410372",
+    "utssdk/app-ios/Info.plist": "8c2ebad8ff9510238b9d792296001cae7e59a07f3eb80418024c2114a6f1718b",
+    "scripts/hbuilderx-gradle.sh": "f55e76783ec2079f8a6364d0d16cfedbb507c801f297039f6ece2cc1e003736b"
+  }
+}
