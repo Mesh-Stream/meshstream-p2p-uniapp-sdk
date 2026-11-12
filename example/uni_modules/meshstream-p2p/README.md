@@ -4,7 +4,7 @@
 
 MeshStream is a uni-app P2P video and audio streaming plugin for Android and iOS apps. It provides a shared UTS / JavaScript client/session API, a local playback URL for your existing player, peer events and traffic statistics, with HTTP/CDN fallback.
 
-Current plugin: **1.0.7**. Both native SDK dependencies are **1.0.10**.
+Current plugin: **1.1.0**. Both native SDK dependencies are **1.1.0**.
 
 ## How it works
 
@@ -38,8 +38,8 @@ The Android dependency includes `armeabi-v7a`, `arm64-v8a`, `x86`, and `x86_64` 
 
 - HBuilderX 4.25+ and uni-app Vue 3 App.
 - Plugin minimums: Android 5.0 / API 21 and iOS 15+. The actual application minimum is the highest requirement from the plugin, HBuilderX base and player; the example targets Android API 24.
-- Android dependency: `io.meshstream:meshstream-android-sdk:1.0.10` from `https://sdk.meshstream.net/maven`.
-- iOS dependency: CocoaPods `MeshStreamKit = 1.0.10`. Both native runtime versions are `1.0.10`.
+- Android dependency: `io.meshstream:meshstream-android-sdk:1.1.0` from `https://sdk.meshstream.net/maven`.
+- iOS dependency: CocoaPods `MeshStreamKit = 1.1.0`. Both native runtime versions are `1.1.0`.
 - Use a custom base or cloud packaging to include the native SDKs and configuration.
 
 This plugin targets App Android / iOS, not H5, mini-programs or uni-app x.
@@ -116,14 +116,18 @@ Subscribe with `const eventId = MeshStream.subscribeEvents(callback)` and call `
 
 ### Android repository resolution
 
-If HBuilderX 5.33 cannot resolve the MeshStream Maven dependency because its temporary Gradle project uses `PREFER_SETTINGS`, use the bundled [Gradle launcher](scripts/hbuilderx-gradle.sh):
+For local builds on macOS/Linux, if HBuilderX 5.33/5.34 cannot resolve the Maven dependency because its temporary Gradle project uses `PREFER_SETTINGS`, run the bundled setup script:
 
 ```sh
-chmod +x uni_modules/meshstream-p2p/scripts/hbuilderx-gradle.sh
-export MESHSTREAM_GRADLE_EXECUTABLE=/absolute/path/to/gradle
+python3 uni_modules/meshstream-p2p/scripts/configure-hbuilderx-gradle.py
 ```
 
-Point HBuilderX's UTS Android Gradle executable setting to that script and make the environment variable available to HBuilderX. Set the variable to the actual Gradle binary. The script changes repository priority to `PREFER_PROJECT` only for HBuilderX temporary dependency-resolution projects. It keeps the exact public Maven dependency.
+Python 3 is required. Setup keeps the Gradle executable already configured in HBuilderX and updates
+only its UTS Android launcher setting; no shell exports or terminal launch of HBuilderX are needed.
+If Gradle is not configured yet, add `--gradle /absolute/path/to/gradle` (a Gradle Wrapper is also supported).
+The launcher uses `PREFER_PROJECT` only in HBuilderX temporary dependency-resolution projects and
+keeps the exact public Maven dependency. Run setup again after moving the plugin, or add `--restore`
+to restore the previous Gradle setting.
 
 </details>
 

@@ -46,6 +46,7 @@ def main():
         "CHANGELOG.md": "changelog.md",
         "LICENSE.md": "LICENSE.md",
         "scripts/hbuilderx-gradle.sh": "scripts/hbuilderx-gradle.sh",
+        "scripts/configure-hbuilderx-gradle.py": "scripts/configure-hbuilderx-gradle.py",
         "javascript.js": "javascript.js",
         "javascript-bridge.js": "javascript-bridge.js",
     }

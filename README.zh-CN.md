@@ -116,14 +116,17 @@ iOS 模拟器需要匹配架构的自定义基座：Apple Silicon 使用 arm64�
 
 ### Android 仓库解析
 
-若 HBuilderX 5.33 的临时 Gradle 工程因 `PREFER_SETTINGS` 找不到 Maven 依赖，可配置随插件提供的 [Gradle launcher](scripts/hbuilderx-gradle.sh)：
+在 macOS/Linux 本地调试时，若 HBuilderX 5.33/5.34 的临时 Gradle 工程因 `PREFER_SETTINGS` 找不到 Maven 依赖，运行随插件提供的配置脚本：
 
 ```bash
-chmod +x uni_modules/meshstream-p2p/scripts/hbuilderx-gradle.sh
-export MESHSTREAM_GRADLE_EXECUTABLE=/absolute/path/to/gradle
+python3 uni_modules/meshstream-p2p/scripts/configure-hbuilderx-gradle.py
 ```
 
-将变量改为实际 Gradle 可执行文件，并让 HBuilderX 能读取该变量；将 UTS Android 的 Gradle 可执行程序设为该脚本。脚本仅对 HBuilderX 临时依赖解析工程启用 `PREFER_PROJECT`。
+需要 Python 3。脚本沿用 HBuilderX 已配置的 Gradle，只更新 UTS Android 的启动器设置，
+不需要从终端启动 HBuilderX 或导出环境变量。若尚未配置 Gradle，添加
+`--gradle /absolute/path/to/gradle`（也支持 Gradle Wrapper）。启动器仅在 HBuilderX
+临时依赖解析工程中启用 `PREFER_PROJECT`，继续从官方 Maven 下载精确版本。
+更新插件位置后重新运行配置；使用同一命令加 `--restore` 可恢复原 Gradle 设置。
 
 </details>
 

@@ -4,7 +4,7 @@
 
 MeshStream 是面向 Android 和 iOS App 的 uni-app P2P 视频与音频流媒体插件。它通过统一的 UTS / JavaScript client/session API 提供现有播放器可使用的本地播放地址、Peer 事件和流量统计，并支持 HTTP/CDN 回退。
 
-当前插件版本：**1.0.7**；双端原生 SDK 版本：**1.0.10**。
+当前插件版本：**1.1.0**；双端原生 SDK 版本：**1.1.0**。
 
 ## 工作方式
 
@@ -38,8 +38,8 @@ Android 依赖包含 `armeabi-v7a`、`arm64-v8a`、`x86` 和 `x86_64`，可用�
 
 - HBuilderX 4.25+、uni-app Vue 3 App。
 - 插件 Android 声明下限为 Android 5.0 / API 21；iOS 15+。应用实际下限取插件、HBuilderX 基座及播放器要求的最大值；示例以 API 24 构建。
-- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.10`，Maven 地址 `https://sdk.meshstream.net/maven`。
-- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.10`。Android 和 iOS native 运行时版本均为 `1.0.10`。
+- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.1.0`，Maven 地址 `https://sdk.meshstream.net/maven`。
+- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.1.0`。Android 和 iOS native 运行时版本均为 `1.1.0`。
 - 使用自定义基座或云打包；标准基座无法包含本插件所需的原生 SDK 和配置。
 
 此插件用于 App Android / iOS，不用于 H5、小程序或 uni-app x。
@@ -116,14 +116,17 @@ iOS 模拟器需要匹配架构的自定义基座：Apple Silicon 使用 arm64�
 
 ### Android 仓库解析
 
-若 HBuilderX 5.33 的临时 Gradle 工程因 `PREFER_SETTINGS` 找不到 Maven 依赖，可配置随插件提供的 [Gradle launcher](scripts/hbuilderx-gradle.sh)：
+在 macOS/Linux 本地调试时，若 HBuilderX 5.33/5.34 的临时 Gradle 工程因 `PREFER_SETTINGS` 找不到 Maven 依赖，运行随插件提供的配置脚本：
 
 ```bash
-chmod +x uni_modules/meshstream-p2p/scripts/hbuilderx-gradle.sh
-export MESHSTREAM_GRADLE_EXECUTABLE=/absolute/path/to/gradle
+python3 uni_modules/meshstream-p2p/scripts/configure-hbuilderx-gradle.py
 ```
 
-将变量改为实际 Gradle 可执行文件，并让 HBuilderX 能读取该变量；将 UTS Android 的 Gradle 可执行程序设为该脚本。脚本仅对 HBuilderX 临时依赖解析工程启用 `PREFER_PROJECT`。
+需要 Python 3。脚本沿用 HBuilderX 已配置的 Gradle，只更新 UTS Android 的启动器设置，
+不需要从终端启动 HBuilderX 或导出环境变量。若尚未配置 Gradle，添加
+`--gradle /absolute/path/to/gradle`（也支持 Gradle Wrapper）。启动器仅在 HBuilderX
+临时依赖解析工程中启用 `PREFER_PROJECT`，继续从官方 Maven 下载精确版本。
+更新插件位置后重新运行配置；使用同一命令加 `--restore` 可恢复原 Gradle 设置。
 
 </details>
 

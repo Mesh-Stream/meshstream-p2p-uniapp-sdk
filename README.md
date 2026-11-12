@@ -116,14 +116,18 @@ Subscribe with `const eventId = MeshStream.subscribeEvents(callback)` and call `
 
 ### Android repository resolution
 
-If HBuilderX 5.33 cannot resolve the MeshStream Maven dependency because its temporary Gradle project uses `PREFER_SETTINGS`, use the bundled [Gradle launcher](scripts/hbuilderx-gradle.sh):
+For local builds on macOS/Linux, if HBuilderX 5.33/5.34 cannot resolve the Maven dependency because its temporary Gradle project uses `PREFER_SETTINGS`, run the bundled setup script:
 
 ```sh
-chmod +x uni_modules/meshstream-p2p/scripts/hbuilderx-gradle.sh
-export MESHSTREAM_GRADLE_EXECUTABLE=/absolute/path/to/gradle
+python3 uni_modules/meshstream-p2p/scripts/configure-hbuilderx-gradle.py
 ```
 
-Point HBuilderX's UTS Android Gradle executable setting to that script and make the environment variable available to HBuilderX. Set the variable to the actual Gradle binary. The script changes repository priority to `PREFER_PROJECT` only for HBuilderX temporary dependency-resolution projects. It keeps the exact public Maven dependency.
+Python 3 is required. Setup keeps the Gradle executable already configured in HBuilderX and updates
+only its UTS Android launcher setting; no shell exports or terminal launch of HBuilderX are needed.
+If Gradle is not configured yet, add `--gradle /absolute/path/to/gradle` (a Gradle Wrapper is also supported).
+The launcher uses `PREFER_PROJECT` only in HBuilderX temporary dependency-resolution projects and
+keeps the exact public Maven dependency. Run setup again after moving the plugin, or add `--restore`
+to restore the previous Gradle setting.
 
 </details>
 

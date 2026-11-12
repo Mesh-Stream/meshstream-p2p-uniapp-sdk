@@ -1,13 +1,27 @@
 # Changelog
 
+## Unreleased
+
+- Reject iOS native error responses in the JavaScript API, including statistics and diagnostics queries after a session closes.
+- Add repeatable HBuilderX 5.33/5.34 local Gradle setup and restore commands. The launcher retains the configured Gradle executable without requiring GUI environment exports and limits its repository workaround to HBuilderX dependency-resolution projects.
+
+## 1.1.0 - 2026-11-12
+
+- Pins Android and iOS native SDK dependencies to 1.1.0.
+- Adopts the native peer-discovery scheduling update while retaining the existing public API.
+
 ## 1.0.7 - 2026-11-09
 
 - 将 iOS MeshStreamKit 和 Android 原生依赖统一升级至 1.0.10。
 - 保持 Android API 21+、iOS 15+ 及 Android 四种 ABI 支持。
 - 同步双端依赖配置、版本检查和接入说明。
 
-## 1.0.6 (2026-11-01)
-升级 Android SDK 至 1.0.9，包含 ARM32、ARM64、x86 和 x86_64 四种 ABI，支持匹配架构的真机和模拟器；保持 iOS MeshStreamKit 1.0.8，更新接入说明与示例。
+## 1.0.6 - 2026-11-01
+
+- 升级 Android 原生依赖至 1.0.9，包含 armeabi-v7a、arm64-v8a、x86、x86_64 四种 ABI。
+- 保持 iOS MeshStreamKit 1.0.8、Android API 21+ 与 iOS 15+ 的插件要求。
+- 更新接入说明、模拟器架构说明和示例。
+
 ## 1.0.5 - 2026-11-01
 
 - 修复新版 UTS/Kotlin 编译器的只读属性初始化错误，公开属性保持只读。

@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Reject iOS native error responses in the JavaScript API, including statistics and diagnostics queries after a session closes.
+- Add repeatable HBuilderX 5.33/5.34 local Gradle setup and restore commands. The launcher retains the configured Gradle executable without requiring GUI environment exports and limits its repository workaround to HBuilderX dependency-resolution projects.
 
 ## 1.1.0 - 2026-11-12
 
