@@ -4,7 +4,7 @@
 
 MeshStream 是面向 Android 和 iOS App 的 uni-app P2P 视频与音频流媒体插件。它通过统一的 UTS / JavaScript client/session API 提供现有播放器可使用的本地播放地址、Peer 事件和流量统计，并支持 HTTP/CDN 回退。
 
-当前插件版本：**1.0.7**；双端原生 SDK 版本：**1.0.10**。
+当前插件版本：**1.1.0**；双端原生 SDK 版本：**1.1.0**。
 
 ## 工作方式
 
@@ -38,8 +38,8 @@ Android 依赖包含 `armeabi-v7a`、`arm64-v8a`、`x86` 和 `x86_64`，可用�
 
 - HBuilderX 4.25+、uni-app Vue 3 App。
 - 插件 Android 声明下限为 Android 5.0 / API 21；iOS 15+。应用实际下限取插件、HBuilderX 基座及播放器要求的最大值；示例以 API 24 构建。
-- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.0.10`，Maven 地址 `https://sdk.meshstream.net/maven`。
-- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.0.10`。Android 和 iOS native 运行时版本均为 `1.0.10`。
+- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.1.0`，Maven 地址 `https://sdk.meshstream.net/maven`。
+- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.1.0`。Android 和 iOS native 运行时版本均为 `1.1.0`。
 - 使用自定义基座或云打包；标准基座无法包含本插件所需的原生 SDK 和配置。
 
 此插件用于 App Android / iOS，不用于 H5、小程序或 uni-app x。

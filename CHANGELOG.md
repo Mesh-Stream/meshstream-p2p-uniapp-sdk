@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 - 2026-11-12
+
+- Pins Android and iOS native SDK dependencies to 1.1.0.
+- Adopts the native peer-discovery scheduling update while retaining the existing public API.
+
 ## 1.0.7 - 2026-11-09
 
 - 将 iOS MeshStreamKit 和 Android 原生依赖统一升级至 1.0.10。

@@ -4,7 +4,7 @@
 
 MeshStream is a uni-app P2P video and audio streaming plugin for Android and iOS apps. It provides a shared UTS / JavaScript client/session API, a local playback URL for your existing player, peer events and traffic statistics, with HTTP/CDN fallback.
 
-Current plugin: **1.0.7**. Both native SDK dependencies are **1.0.10**.
+Current plugin: **1.1.0**. Both native SDK dependencies are **1.1.0**.
 
 ## How it works
 
@@ -38,8 +38,8 @@ The Android dependency includes `armeabi-v7a`, `arm64-v8a`, `x86`, and `x86_64` 
 
 - HBuilderX 4.25+ and uni-app Vue 3 App.
 - Plugin minimums: Android 5.0 / API 21 and iOS 15+. The actual application minimum is the highest requirement from the plugin, HBuilderX base and player; the example targets Android API 24.
-- Android dependency: `io.meshstream:meshstream-android-sdk:1.0.10` from `https://sdk.meshstream.net/maven`.
-- iOS dependency: CocoaPods `MeshStreamKit = 1.0.10`. Both native runtime versions are `1.0.10`.
+- Android dependency: `io.meshstream:meshstream-android-sdk:1.1.0` from `https://sdk.meshstream.net/maven`.
+- iOS dependency: CocoaPods `MeshStreamKit = 1.1.0`. Both native runtime versions are `1.1.0`.
 - Use a custom base or cloud packaging to include the native SDKs and configuration.
 
 This plugin targets App Android / iOS, not H5, mini-programs or uni-app x.
