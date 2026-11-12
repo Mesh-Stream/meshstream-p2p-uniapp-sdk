@@ -14,6 +14,14 @@ test('malformed replies reject instead of leaving the request pending', async ()
   const sdk = createMeshStreamFacade({ invoke(operation, args, complete) { complete('invalid JSON') } })
   await assert.rejects(sdk.getStatus('client'), SyntaxError)
 })
+test('iOS error objects reject closed session queries and failed creation', async () => {
+  const sdk = createMeshStreamFacade({ invoke(operation, args, complete) {
+    complete(JSON.stringify({ ok: true, value: { error: 'Unknown or closed MeshStream session' } }))
+  } })
+  await assert.rejects(sdk.getStats('client', 'closed'), /Unknown or closed/)
+  await assert.rejects(sdk.getDiagnostics('client', 'closed'), /Unknown or closed/)
+  await assert.rejects(sdk.create({ key: '' }), /Unknown or closed/)
+})
 test('session options and false P2P flags reach the native transport', async () => {
   const calls = []
   const sdk = createMeshStreamFacade({ invoke(operation, args, complete) {

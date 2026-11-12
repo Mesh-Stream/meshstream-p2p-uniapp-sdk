@@ -7,6 +7,10 @@ export function createMeshStreamFacade(native) {
         try {
           const result = JSON.parse(payload)
           if (result.ok !== true) throw new Error(result.error || 'MeshStream request failed')
+          // iOS native methods encode failures as JSON instead of throwing.
+          if (result.value && typeof result.value === 'object' && typeof result.value.error === 'string') {
+            throw new Error(result.value.error)
+          }
           resolve(result.value)
         } catch (error) {
           reject(error)

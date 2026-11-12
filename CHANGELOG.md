@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Reject iOS native error responses in the JavaScript API, including statistics and diagnostics queries after a session closes.
+
 ## 1.1.0 - 2026-11-12
 
 - Pins Android and iOS native SDK dependencies to 1.1.0.
