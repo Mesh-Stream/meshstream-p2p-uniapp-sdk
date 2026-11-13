@@ -1,0 +1,14 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.1.1",
+  "nativeVersions": {
+    "android": "1.1.1",
+    "ios": "1.1.1"
+  },
+  "status": "candidate",
+  "validation": {
+    "androidMaven": "passed",
+    "iosCocoaPods": "blocked: MeshStreamKit 1.1.1 not visible in public CocoaPods index",
+    "dcloud": "pending"
+  }
+}

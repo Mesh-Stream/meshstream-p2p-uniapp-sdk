@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 - candidate
+
+- Candidate update to native Android/iOS SDK 1.1.1; DCloud publication waits for public CocoaPods installation verification.
+
 ## Unreleased
 
 - Reject iOS native error responses in the JavaScript API, including statistics and diagnostics queries after a session closes.
