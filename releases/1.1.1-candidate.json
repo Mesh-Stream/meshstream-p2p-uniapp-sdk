@@ -26,10 +26,11 @@
     "effectiveMinimum": "max(plugin, framework/runtime, player)",
     "exampleMinSdk": 24
   },
-  "status": "candidate",
+  "status": "superseded-by-public-release",
   "validation": {
     "androidMaven": "passed",
     "iosCocoaPods": "passed",
-    "dcloud": "pending"
-  }
+    "dcloud": "published: https://ext.dcloud.net.cn/plugin?name=meshstream-p2p"
+  },
+  "supersededBy": "releases/1.1.1.json"
 }

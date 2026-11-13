@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.1.1 - candidate
+## 1.1.1 - 2026-11-14
 
-- Candidate update to native Android/iOS SDK 1.1.1; DCloud publication waits for public CocoaPods installation verification.
+- Upgrade the Android and iOS native SDK dependencies to 1.1.1.
+- Published to the DCloud plugin market with public Maven and CocoaPods dependencies.
 
 ## Unreleased
 

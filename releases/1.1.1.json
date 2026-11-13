@@ -27,16 +27,23 @@
     "exampleMinSdk": 24
   },
   "publication": {
-    "dcloud": "prepared",
-    "marketplace": "pending",
+    "dcloud": "published",
+    "marketplace": "published",
+    "marketUrl": "https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "publicPageVersion": "1.1.1",
+    "publishedAt": "2026-11-14",
     "artifactSha256": "13338d0fe3477b3d08767537fadcb6a182e89a68b0497f46deaa15a37e09732a",
-    "artifactBytes": 29768
+    "artifactBytes": 29768,
+    "marketFileCount": 18,
+    "marketFileManifestSha256": "d572ef0741bb24412caf4b26ceb3e2b1b8972ad26ac935e80f9f4f2d4ffc82bb"
   },
   "validation": {
     "androidMaven": "passed",
     "iosCocoaPods": "passed",
     "utsTests": "passed",
     "marketplacePackage": "passed",
-    "deviceAcceptance": "pending"
+    "deviceAcceptance": "pending",
+    "marketplacePublicInstall": "passed: official CLI exact version 1.1.1; 18/18 source files match",
+    "marketplaceUtsCompile": "pending: CLI returned async extension preparation without final JAR/DEX or iOS framework result"
   }
 }
