@@ -1,0 +1,45 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.1.2",
+  "nativeDependencies": {
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.1.2",
+      "minSdk": 21,
+      "abi": [
+        "armeabi-v7a",
+        "arm64-v8a",
+        "x86",
+        "x86_64"
+      ],
+      "aarSha256": "cf681e49753ee812ff52ff8dfc564cca502f87c51e602816fe94b8c4f017deff"
+    },
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.1.2",
+      "runtimeVersion": "1.1.2",
+      "minimumOS": "iOS 15.0",
+      "zipSha256": "4d26ea4fd4a904de93289d51f0f804ebca41ffd89644f69240d4f068233c4f5a"
+    }
+  },
+  "compatibility": {
+    "effectiveMinimum": "max(plugin, framework/runtime, player)",
+    "exampleMinSdk": 24
+  },
+  "publication": {
+    "dcloud": "pending",
+    "marketplace": "pending",
+    "artifactSha256": "272cd2b1667b6c0a065c1ca6939c3773b7665568b75ca1a44175947fccf88498",
+    "artifactBytes": 29763,
+    "marketFileCount": 18
+  },
+  "validation": {
+    "androidMaven": "passed",
+    "iosCocoaPods": "passed",
+    "utsTests": "passed",
+    "marketplacePackage": "passed",
+    "deviceAcceptance": "pending",
+    "marketplacePublicInstall": "passed: official CLI exact version 1.1.1; 18/18 source files match",
+    "marketplaceUtsCompile": "pending: CLI returned async extension preparation without final JAR/DEX or iOS framework result"
+  }
+}

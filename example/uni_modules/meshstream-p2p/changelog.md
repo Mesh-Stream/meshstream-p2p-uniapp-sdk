@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 - 2026-11-16
+
+- Pins the public iOS and Android native SDK dependencies to 1.1.2.
+- Keeps the existing Uniapp UTS API and platform minimums.
+
+
 ## Unreleased
 
 - Reject iOS native error responses in the JavaScript API, including statistics and diagnostics queries after a session closes.
