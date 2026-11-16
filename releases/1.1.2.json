@@ -45,6 +45,6 @@
     "marketplacePackage": "passed",
     "deviceAcceptance": "pending",
     "marketplacePublicInstall": "passed: official CLI exact version 1.1.2; 18/18 source files match",
-    "marketplaceUtsCompile": "pending: CLI returned async extension preparation without final JAR/DEX or iOS framework result"
+    "marketplaceUtsCompile": "passed: HBuilderX 5.34 Android UTS compile generated index.jar and classes.dex for meshstream-p2p 1.1.2"
   }
 }
