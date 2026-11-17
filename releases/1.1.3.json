@@ -1,0 +1,46 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.1.3",
+  "nativeDependencies": {
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.1.2",
+      "minSdk": 21,
+      "abi": [
+        "armeabi-v7a",
+        "arm64-v8a",
+        "x86",
+        "x86_64"
+      ],
+      "aarSha256": "cf681e49753ee812ff52ff8dfc564cca502f87c51e602816fe94b8c4f017deff"
+    },
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.1.2",
+      "runtimeVersion": "1.1.2",
+      "minimumOS": "iOS 15.0",
+      "zipSha256": "4d26ea4fd4a904de93289d51f0f804ebca41ffd89644f69240d4f068233c4f5a"
+    }
+  },
+  "compatibility": {
+    "effectiveMinimum": "max(plugin, framework/runtime, player)",
+    "exampleMinSdk": 24
+  },
+  "publication": {
+    "dcloud": "prepared",
+    "marketplace": "prepared",
+    "marketUrl": "https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "artifactSha256": "87bc674b9eb3a26230bc8093e6e52a24f1b7a19d7cccbb66f6585eb4ab2c8098",
+    "artifactBytes": 30332,
+    "marketFileCount": 18
+  },
+  "validation": {
+    "androidMaven": "passed: public 1.1.2 dependency",
+    "iosCocoaPods": "passed: public 1.1.2 dependency",
+    "utsTests": "passed: 10/10 JavaScript and HBuilderX Gradle tests",
+    "marketplacePackage": "passed: deterministic 18-file plugin archive",
+    "deviceAcceptance": "pending: exact 1.1.3 marketplace install",
+    "marketplacePublicInstall": "pending",
+    "marketplaceUtsCompile": "pending"
+  }
+}

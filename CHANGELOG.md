@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3 - 2026-11-18
+
+- Refresh playback mode and fallback state from the native session so late bootstrap and P2P transitions are reflected by Uniapp callers.
+- Keep the public Android and iOS native dependencies pinned to 1.1.2.
+- Update the verification example to expose P2P upload bytes alongside download statistics.
+
 ## 1.1.1 - 2026-11-14
 
 - Upgrade the Android and iOS native SDK dependencies to 1.1.1.

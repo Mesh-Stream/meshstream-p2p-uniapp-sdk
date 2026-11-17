@@ -4,7 +4,7 @@
 
 MeshStream 是面向 Android 和 iOS App 的 uni-app P2P 视频与音频流媒体插件。它通过统一的 UTS / JavaScript client/session API 提供现有播放器可使用的本地播放地址、Peer 事件和流量统计，并支持 HTTP/CDN 回退。
 
-当前插件版本：**1.1.2**；双端原生 SDK 版本：**1.1.2**。
+当前插件版本：**1.1.3**；双端原生 SDK 版本：**1.1.2**。
 
 ## 工作方式
 
