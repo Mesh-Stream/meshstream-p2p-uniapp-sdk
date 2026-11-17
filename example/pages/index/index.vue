@@ -37,6 +37,7 @@
       <view class="metric"><text>Mode</text><text>{{ playbackMode || '-' }}</text></view>
       <view class="metric"><text>Peers</text><text>{{ numberField(stats, 'connectedPeers') }}</text></view>
       <view class="metric"><text>P2P download</text><text>{{ bytesField(stats, 'p2pDownloaded') }}</text></view>
+      <view class="metric"><text>P2P upload</text><text>{{ bytesField(stats, 'p2pUploaded') }}</text></view>
       <view class="metric"><text>CDN download</text><text>{{ bytesField(stats, 'httpDownloaded') }}</text></view>
       <view class="metric"><text>Offload</text><text>{{ ratioField(stats, 'downloadOffloadRatio') }}</text></view>
       <view class="metric"><text>Fallback reason</text><text>{{ fallbackReason || 'none' }}</text></view>
