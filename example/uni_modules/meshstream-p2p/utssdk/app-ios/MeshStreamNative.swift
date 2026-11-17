@@ -75,6 +75,16 @@ public final class MeshStreamNative: NSObject {
   public static func setP2pEnabled(_ clientId: String, _ sessionId: String, _ enabled: Bool) { session(clientId, sessionId)?.setP2PEnabled(enabled) }
   public static func updateBufferedDurationMs(_ clientId: String, _ sessionId: String, _ durationMs: NSNumber) { session(clientId, sessionId)?.updateBufferedDurationMs(max(0, durationMs.int64Value)) }
   public static func updateCurrentPositionMs(_ clientId: String, _ sessionId: String, _ positionMs: NSNumber) { session(clientId, sessionId)?.updateCurrentPositionMs(max(0, positionMs.int64Value)) }
+  public static func getSessionInfo(_ clientId: String, _ sessionId: String) -> String {
+    guard let value = session(clientId, sessionId) else { return errorJson("Unknown or closed MeshStream session: \(sessionId)") }
+    var result: [String: Any] = [
+      "clientId": clientId, "sessionId": sessionId,
+      "playbackUrl": value.playbackUrl.absoluteString,
+      "playbackMode": value.playbackMode == .nativeP2P ? "NATIVE_P2P" : "NATIVE_CDN"
+    ]
+    if value.playbackMode == .nativeCDN { result["fallbackReason"] = reason(value.fallbackReason) }
+    return encode(result)
+  }
   public static func getStatus(_ clientId: String) -> String { guard let value = client(clientId) else { return errorJson("Unknown or closed MeshStream client: \(clientId)") }; return encode(status(value.client.sdkStatus)) }
   public static func getStats(_ clientId: String, _ sessionId: String) -> String { guard let value = session(clientId, sessionId) else { return errorJson("Unknown or closed MeshStream session: \(sessionId)") }; return encode(stats(value.statistics())) }
   public static func getDiagnostics(_ clientId: String, _ sessionId: String) -> String { guard let value = session(clientId, sessionId) else { return errorJson("Unknown or closed MeshStream session: \(sessionId)") }; return encode(diagnostics(value.diagnostics())) }

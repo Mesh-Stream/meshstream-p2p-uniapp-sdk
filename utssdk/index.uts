@@ -46,8 +46,14 @@ export class MeshStreamPlaybackSession {
   get clientId(): string { return this.clientIdValue }
   get sessionId(): string { return this.sessionIdValue }
   get playbackUrl(): string { return this.playbackUrlValue }
-  get playbackMode(): MeshStreamPlaybackMode { return this.playbackModeValue }
-  get fallbackReason(): string | null { return this.fallbackReasonValue }
+  get playbackMode(): MeshStreamPlaybackMode {
+    this.refreshInfo()
+    return this.playbackModeValue
+  }
+  get fallbackReason(): string | null {
+    this.refreshInfo()
+    return this.fallbackReasonValue
+  }
   private closed = false
 
   constructor(info: UTSJSONObject) {
@@ -57,6 +63,19 @@ export class MeshStreamPlaybackSession {
     this.playbackModeValue = info.getString('playbackMode') as MeshStreamPlaybackMode
     const rawFallbackReason = info.getString('fallbackReason')
     this.fallbackReasonValue = rawFallbackReason == null ? null : (rawFallbackReason as string)
+  }
+
+  private refreshInfo(): void {
+    if (this.closed) return
+    try {
+      const info = parseObject(MeshStreamNative.getSessionInfo(this.clientId, this.sessionId))
+      const mode = info.getString('playbackMode')
+      if (mode != null) this.playbackModeValue = mode as MeshStreamPlaybackMode
+      const rawFallbackReason = info.getString('fallbackReason')
+      this.fallbackReasonValue = rawFallbackReason == null ? null : (rawFallbackReason as string)
+    } catch (error) {
+      // Keep the last known state if a session is concurrently closing.
+    }
   }
 
   async preload(): Promise<boolean> {
@@ -195,6 +214,7 @@ export class MeshStream {
           value = parseObject(MeshStreamNative.createClient(args.getString('key') ?? '', args.getBoolean('p2pEnabled')))
           break
         case 'createPlaybackSession': value = parseObject(MeshStreamNative.createPlaybackSession(clientId, args.getString('optionsJson') ?? '{}')); break
+        case 'getSessionInfo': value = parseObject(MeshStreamNative.getSessionInfo(clientId, sessionId)); break
         case 'getStatus': value = parseObject(MeshStreamNative.getStatus(clientId)); break
         case 'getStats': value = parseObject(MeshStreamNative.getStats(clientId, sessionId)); break
         case 'getDiagnostics': value = parseObject(MeshStreamNative.getDiagnostics(clientId, sessionId)); break

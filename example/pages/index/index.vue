@@ -139,10 +139,17 @@ async function refreshTelemetry() {
     MeshStream.getDiagnostics(activeClient.clientId, activeSession.sessionId),
   ])
   const nextStatus = await MeshStream.getStatus(activeClient.clientId)
+  // The native session can move from CDN to P2P after creation. Read the
+  // dynamic session properties on every telemetry refresh so the example does
+  // not keep displaying the creation-time snapshot.
+  const nextPlaybackMode = activeSession.playbackMode
+  const nextFallbackReason = activeSession.fallbackReason
   if (client !== activeClient || session !== activeSession) return
   stats.value = nextStats
   diagnostics.value = nextDiagnostics
   status.value = nextStatus
+  playbackMode.value = nextPlaybackMode
+  fallbackReason.value = nextFallbackReason || ''
 }
 
 async function releaseResources() {
@@ -212,6 +219,10 @@ async function start() {
       ...(contentId.value.trim() ? { contentId: contentId.value.trim() } : {}),
       mimeType: mediaUrl.value.includes('.mpd') ? 'mpd' : 'm3u8',
     })
+    // Start the native swarm prewarm before handing the proxy URL to the
+    // player. Playback remains CDN-first, while tracker/ICE discovery can
+    // run during the player's manifest startup window.
+    await MeshStream.preload(client.clientId, session.sessionId)
     playbackUrl.value = session.playbackUrl
     playbackMode.value = session.playbackMode
     fallbackReason.value = session.fallbackReason || ''

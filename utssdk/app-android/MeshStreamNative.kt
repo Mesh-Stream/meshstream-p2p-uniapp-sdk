@@ -2,10 +2,12 @@ package uts.sdk.modules.meshstreamP2p
 
 import android.os.Handler
 import android.os.Looper
+import android.content.pm.ApplicationInfo
 import io.dcloud.uts.UTSAndroid
 import io.meshstream.sdk.P2pClient
 import io.meshstream.sdk.P2pConfig
 import io.meshstream.sdk.P2pEventListener
+import io.meshstream.sdk.P2pLogLevel
 import io.meshstream.sdk.P2pSdk
 import io.meshstream.sdk.P2pStats
 import io.meshstream.sdk.PlaybackOptions
@@ -36,7 +38,17 @@ object MeshStreamNative {
     @JvmStatic fun createClient(key: String, p2pEnabled: Boolean?): String {
         require(key.isNotBlank()) { "key must not be empty" }
         val context = requireNotNull(UTSAndroid.getAppContext()) { "Application context is unavailable" }
-        val client = P2pSdk.create(context, P2pConfig(key = key, p2pEnabled = p2pEnabled ?: true))
+        // Keep release consumers silent while making Debug custom bases diagnosable.
+        // This does not change the public UTS API or the release logging policy.
+        val debugLogging = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+        val client = P2pSdk.create(
+            context,
+            P2pConfig(
+                key = key,
+                p2pEnabled = p2pEnabled ?: true,
+                logLevel = if (debugLogging) P2pLogLevel.DEBUG else P2pLogLevel.NONE,
+            ),
+        )
         val clientId = UUID.randomUUID().toString()
         val state = ClientState(client)
         clients[clientId] = state
@@ -82,6 +94,16 @@ object MeshStreamNative {
     @JvmStatic fun setP2pEnabled(clientId: String, sessionId: String, enabled: Boolean) = session(clientId, sessionId).setP2pEnabled(enabled)
     @JvmStatic fun updateBufferedDurationMs(clientId: String, sessionId: String, durationMs: Number) = session(clientId, sessionId).updateBufferedDurationMs(durationMs.toLong().coerceAtLeast(0))
     @JvmStatic fun updateCurrentPositionMs(clientId: String, sessionId: String, positionMs: Number) = session(clientId, sessionId).updateCurrentPositionMs(positionMs.toLong().coerceAtLeast(0))
+    @JvmStatic fun getSessionInfo(clientId: String, sessionId: String): String {
+        val value = session(clientId, sessionId)
+        return JSONObject()
+            .put("clientId", clientId)
+            .put("sessionId", sessionId)
+            .put("playbackUrl", value.playbackUrl)
+            .put("playbackMode", value.playbackMode.name)
+            .apply { value.fallbackReason?.let { put("fallbackReason", it.name) } }
+            .toString()
+    }
     @JvmStatic fun getStatus(clientId: String): String = statusJson(client(clientId).client.status).toString()
     @JvmStatic fun getStats(clientId: String, sessionId: String): String = statsJson(session(clientId, sessionId).statistics()).toString()
     @JvmStatic fun getDiagnostics(clientId: String, sessionId: String): String = diagnosticsJson(session(clientId, sessionId).diagnostics()).toString()
