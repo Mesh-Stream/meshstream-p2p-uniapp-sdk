@@ -27,12 +27,16 @@
     "exampleMinSdk": 24
   },
   "publication": {
-    "dcloud": "prepared",
-    "marketplace": "prepared",
+    "dcloud": "published",
+    "marketplace": "published",
     "marketUrl": "https://ext.dcloud.net.cn/plugin?name=meshstream-p2p",
+    "publicPageVersion": "1.1.3",
+    "publishedAt": "2026-11-18",
     "artifactSha256": "87bc674b9eb3a26230bc8093e6e52a24f1b7a19d7cccbb66f6585eb4ab2c8098",
     "artifactBytes": 30332,
-    "marketFileCount": 18
+    "marketUploadBytes": 30448,
+    "marketFileCount": 18,
+    "marketFileManifestSha256": "d6d6ec42016777c3a1a009719e475a52392bb2d457b82c3832ace2f333cea2db"
   },
   "validation": {
     "androidMaven": "passed: public 1.1.2 dependency",
@@ -40,7 +44,7 @@
     "utsTests": "passed: 10/10 JavaScript and HBuilderX Gradle tests",
     "marketplacePackage": "passed: deterministic 18-file plugin archive",
     "deviceAcceptance": "pending: exact 1.1.3 marketplace install",
-    "marketplacePublicInstall": "pending",
-    "marketplaceUtsCompile": "pending"
+    "marketplacePublicInstall": "passed: official CLI exact version 1.1.3; 18/18 source files match",
+    "marketplaceUtsCompile": "pending: HBuilderX 5.34 CLI exited without final UTS artifacts; rerun with a full imported App project"
   }
 }
