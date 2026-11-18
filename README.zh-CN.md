@@ -1,6 +1,6 @@
 # MeshStream P2P uni-app SDK
 
-[English](README.md) · [官网](https://meshstream.net/zh/) · [接入文档](https://meshstream.net/zh/docs/sdk/uniapp-setup/) · [DCloud 插件市场](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p) · [在线 Demo](https://demo.meshstream.net/)
+[English](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/README.en-US.md) · [官网](https://meshstream.net/zh/) · [接入文档](https://meshstream.net/zh/docs/sdk/uniapp-setup/) · [DCloud 插件市场](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p) · [在线 Demo](https://demo.meshstream.net/)
 
 MeshStream 是面向 Android 和 iOS App 的 uni-app P2P 视频与音频流媒体插件。它通过统一的 UTS / JavaScript client/session API 提供现有播放器可使用的本地播放地址、Peer 事件和流量统计，并支持 HTTP/CDN 回退。
 

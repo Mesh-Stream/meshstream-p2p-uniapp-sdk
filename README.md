@@ -1,77 +1,77 @@
 # MeshStream P2P uni-app SDK
 
-[简体中文](README.zh-CN.md) · [Website](https://meshstream.net/) · [Documentation](https://meshstream.net/docs/sdk/uniapp-setup/) · [DCloud plugin](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p) · [Live demo](https://demo.meshstream.net/)
+[English](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/README.en-US.md) · [官网](https://meshstream.net/zh/) · [接入文档](https://meshstream.net/zh/docs/sdk/uniapp-setup/) · [DCloud 插件市场](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p) · [在线 Demo](https://demo.meshstream.net/)
 
-MeshStream is a uni-app P2P video and audio streaming plugin for Android and iOS apps. It provides a shared UTS / JavaScript client/session API, a local playback URL for your existing player, peer events and traffic statistics, with HTTP/CDN fallback.
+MeshStream 是面向 Android 和 iOS App 的 uni-app P2P 视频与音频流媒体插件。它通过统一的 UTS / JavaScript client/session API 提供现有播放器可使用的本地播放地址、Peer 事件和流量统计，并支持 HTTP/CDN 回退。
 
-Current plugin: **1.1.3**. Both native SDK dependencies are **1.1.2**.
+当前插件版本：**1.1.3**；双端原生 SDK 版本：**1.1.2**。
 
-## How it works
+## 工作方式
 
-Create a session from your media URL, then give its `playbackUrl` to your existing player:
+把原始媒体地址交给 SDK 创建会话，再把会话的 `playbackUrl` 交给现有播放器：
 
 ```text
-App → SDK playback session → Local playback URL → Player
-                              └─ SDK fetches from peers or origin/CDN
+应用 → SDK 创建播放会话 → 本地播放地址 → 播放器
+                            └─ SDK 从 Peer 或源站/CDN 获取媒体
 ```
 
-Your player handles decoding, rendering and playback controls. The SDK handles media delivery, caching and P2P scheduling. Configuration and P2P preparation run in the background; playback need not wait for a peer connection. Stop using the old playback URL before closing its session when leaving the page or switching content.
+播放器继续负责解码、画面和播放控制；SDK 负责媒体传输、缓存及 P2P 调度。服务配置与 P2P 准备在后台执行，不需要等到 Peer 连接后才开始播放。离开播放页或切换内容时，先停止使用旧播放地址，再关闭旧会话。
 
-## Features
+## 产品能力
 
-- HLS, MPEG-DASH and HTTP Range MP4/MP3 delivery through the native SDKs.
-- Integration with uni-app Vue 3 App, HBuilderX and an existing video player.
-- Preload, playback position/buffer updates, peer events and P2P/CDN statistics.
-- DCloud plugin distribution with public Maven and CocoaPods native dependencies.
+- 通过原生 SDK 接入 HLS、MPEG-DASH 和支持 HTTP Range 的 MP4/MP3。
+- 面向 uni-app Vue 3 App 与 HBuilderX，可配合已有 video 播放器使用。
+- 支持预加载、播放位置与缓冲回传、Peer 事件和 P2P/CDN 统计。
+- 通过 DCloud 插件市场安装，原生依赖使用公开 Maven 与 CocoaPods。
 
-## Before you start
+## 接入准备
 
-- Create an application and a platform-specific SDK Key in the [MeshStream console](https://console.meshstream.net/). If application identity validation is enabled, register the package name or Bundle ID of the app you run.
-- Have a playable HLS `.m3u8`, DASH `.mpd`, or HTTP Range-capable MP4 / MP3 URL. Prefer HTTPS.
-- Choose a player that supports your source format. The SDK adds delivery capabilities, not codecs; AVPlayer, for example, does not natively play DASH.
+- 在 [MeshStream 控制台](https://console.meshstream.net/)创建应用和对应平台的 SDK Key；启用身份校验时，登记与运行应用一致的包名或 Bundle ID。
+- 准备一个可播放的 HLS `.m3u8`、DASH `.mpd`、支持 Range 的 MP4 或 MP3 地址，建议使用 HTTPS。
+- 选择支持该媒体格式的播放器。SDK 提供传输能力，不增加播放器的解码能力；例如 AVPlayer 不原生支持 DASH。
 
-To try it first, jump to [Run the demo](#run-the-demo). The online demo linked above is a Web experience; run this repository's example for this platform.
+希望先看效果？直接跳到[运行 Demo](#运行-demo)，再按下方步骤接入自己的应用。顶部的在线 Demo 是 Web 体验页，各端示例在本仓库中运行。
 
-## Requirements
+## 运行要求
 
-The Android dependency includes `armeabi-v7a`, `arm64-v8a`, `x86`, and `x86_64` for matching devices and emulators. The application must also meet the architecture and OS requirements of its framework, base and player.
+Android 依赖包含 `armeabi-v7a`、`arm64-v8a`、`x86` 和 `x86_64`，可用于相应架构的真机与模拟器；应用仍需满足框架、基座及播放器的系统和架构要求。
 
-- HBuilderX 4.25+ and uni-app Vue 3 App.
-- Plugin minimums: Android 5.0 / API 21 and iOS 15+. The actual application minimum is the highest requirement from the plugin, HBuilderX base and player; the example targets Android API 24.
-- Android dependency: `io.meshstream:meshstream-android-sdk:1.1.2` from `https://sdk.meshstream.net/maven`.
-- iOS dependency: CocoaPods `MeshStreamKit = 1.1.2`. Both native runtime versions are `1.1.2`.
-- Use a custom base or cloud packaging to include the native SDKs and configuration.
+- HBuilderX 4.25+、uni-app Vue 3 App。
+- 插件 Android 声明下限为 Android 5.0 / API 21；iOS 15+。应用实际下限取插件、HBuilderX 基座及播放器要求的最大值；示例以 API 24 构建。
+- Android 公开依赖：`io.meshstream:meshstream-android-sdk:1.1.2`，Maven 地址 `https://sdk.meshstream.net/maven`。
+- iOS 公开依赖：CocoaPods `MeshStreamKit = 1.1.2`。Android 和 iOS native 运行时版本均为 `1.1.2`。
+- 使用自定义基座或云打包；标准基座无法包含本插件所需的原生 SDK 和配置。
 
-This plugin targets App Android / iOS, not H5, mini-programs or uni-app x.
+此插件用于 App Android / iOS，不用于 H5、小程序或 uni-app x。
 
-## Install
+## 安装与接入
 
-Install the plugin from the [DCloud plugin market](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p), or extract a released plugin ZIP into `uni_modules/meshstream-p2p/` in your application. Its `package.json` must be directly inside that directory.
+从 [DCloud 插件市场](https://ext.dcloud.net.cn/plugin?name=meshstream-p2p)安装，或将已发布插件 ZIP 内的文件解压到应用的 `uni_modules/meshstream-p2p/`，确保 `package.json` 直接位于该目录下。
 
-Vue / JavaScript pages should import `MeshStream` from `@/uni_modules/meshstream-p2p/javascript.js`. This facade manages JavaScript Promises and propagates asynchronous results and errors through UTS. UTS callers can import the module root.
+Vue/JavaScript 页面请使用 `import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'`。此入口为 Vue/JavaScript 页面提供 Promise 异步调用和错误处理。UTS 调用方仍可导入模块根目录。
 
-## Local playback network configuration
+## 本地播放网络配置
 
-The Android plugin includes a manifest and network policy allowing HTTP only for `127.0.0.1` / `localhost`. Merge the loopback rules if your host app already defines a policy. In the iOS app project's root `Info.plist`, merge `NSAllowsLocalNetworking = true` into `NSAppTransportSecurity`. Public HTTP media origins need separate configuration; prefer HTTPS.
+Android 插件已附带 Manifest 和仅放行 `127.0.0.1` / `localhost` 的网络策略；若宿主已有策略，请合并回环规则。在 iOS 应用项目根目录的 `Info.plist` 中，将 `NSAllowsLocalNetworking = true` 合并到 `NSAppTransportSecurity` 字典。公网 HTTP 媒体源需要另行配置，建议使用 HTTPS。
 
-After changing native network settings, rebuild and reinstall the custom base or packaged app; page hot reload does not update these settings. See [platform network configuration](https://meshstream.net/docs/sdk/uniapp-setup/) for file locations and examples.
+修改原生网络配置后，重新制作基座或打包并安装；页面热更新不会更新配置。文件位置及完整示例见[平台网络配置](https://meshstream.net/zh/docs/sdk/uniapp-setup/#平台网络配置)。
 
-## Start playback
+## 快速开始
 
-Prepare a player in the page, with a reactive Vue `playbackUrl`:
+在页面中准备播放器，`playbackUrl` 为 Vue 的响应式变量：
 
 ```html
 <video v-if="playbackUrl" :src="playbackUrl" controls />
 ```
 
-Create a session in your asynchronous play handler and update the bound URL:
+在播放按钮的异步处理函数中创建会话，并更新绑定地址：
 
 ```ts
 import { ref, nextTick } from 'vue'
 import { MeshStream } from '@/uni_modules/meshstream-p2p/javascript.js'
 
 const playbackUrl = ref('')
-// In the async play flow; retain client and session in the page owner:
+// 以下在异步播放流程中执行，并由页面持有 client 和 session：
 const client = await MeshStream.create({ key: 'key_your_platform_key', p2pEnabled: true })
 const session = await MeshStream.createPlaybackSession(client.clientId, {
   url: 'https://cdn.example.com/live/playlist.m3u8',
@@ -81,7 +81,7 @@ const session = await MeshStream.createPlaybackSession(client.clientId, {
 playbackUrl.value = session.playbackUrl
 ```
 
-Keep playing `session.playbackUrl`; do not wait for peers. On teardown or media switch, clear the player binding before closing the old session. Close the client when its owner no longer needs it:
+播放器继续使用 `session.playbackUrl`，无需等待 Peer。离开页面或切换内容时，在退出流程中先清空播放器绑定，再关闭旧会话；不再使用客户端时才关闭它：
 
 ```ts
 playbackUrl.value = ''
@@ -90,68 +90,67 @@ await MeshStream.closeSession(client.clientId, session.sessionId)
 await MeshStream.closeClient(client.clientId)
 ```
 
-These snippets belong in separate startup and teardown steps. See [`example/pages/index/index.vue`](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/example/pages/index/index.vue) for a runnable page. Vue/JavaScript callers use the static `MeshStream` API, not instance methods on returned objects.
+这些片段分别属于初始化与退出流程；可运行页面见 [`example/pages/index/index.vue`](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/example/pages/index/index.vue)。Vue/JavaScript 中使用 `MeshStream` 静态 API，不调用返回对象上的实例方法。
 
-## Run the demo
+## 运行 Demo
 
 ```bash
 git clone https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk.git
 ```
 
-1. Open the repository's [`example/`](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/tree/main/example) directory in HBuilderX as a Vue 3 uni-app project.
-2. Confirm `uni_modules/meshstream-p2p` is installed and configure your app identity in `manifest.json`. If identity validation is enabled, register the actual package name or Bundle ID in the console.
-3. Build and select a custom debug base containing the plugin, or cloud-package the app. The standard base lacks the native SDK. Keep the example's `VideoPlayer` module for Android packaging. iOS devices require signing certificates and a provisioning profile.
-4. Run on Android / iOS, enter the matching platform Key and HTTPS media URL, then start playback and inspect peers, P2P/HTTP traffic and diagnostics.
+1. 在 HBuilderX 中打开仓库的 [`example/`](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/tree/main/example) 目录（Vue 3 uni-app 工程）。
+2. 确认 `uni_modules/meshstream-p2p` 已安装；在 `manifest.json` 中配置自己的应用标识。启用身份校验时，在控制台登记实际包名或 Bundle ID。
+3. 制作并选择包含该插件的自定义调试基座，或进行云打包。标准基座不包含所需原生 SDK。Android 打包需保留示例启用的 `VideoPlayer` 模块；iOS 真机需签名证书和描述文件。
+4. 运行到 Android / iOS，输入对应平台 Key、HTTPS 媒体地址并开始播放，查看页面的 Peer、P2P/HTTP 流量及诊断。
 
-iOS simulators require a matching custom base: arm64 for Apple Silicon or x86_64 for Intel Macs. See the [example guide](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/example/README.md).
+iOS 模拟器需要匹配架构的自定义基座：Apple Silicon 使用 arm64，Intel Mac 使用 x86_64。完整操作见[示例说明](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/example/README.md)。
 
-## Preload and events
+## 预加载与事件
 
-Preload with `await MeshStream.preload(client.clientId, session.sessionId)`. Forward player position and buffered duration through `updateCurrentPositionMs` and `updateBufferedDurationMs` in milliseconds, at most about once per second.
+预加载使用 `await MeshStream.preload(client.clientId, session.sessionId)`。播放器位置和缓冲反馈分别使用 `updateCurrentPositionMs`、`updateBufferedDurationMs`，单位为毫秒，建议最多每秒更新一次。
 
-Subscribe with `const eventId = MeshStream.subscribeEvents(callback)` and call `MeshStream.unsubscribeEvents(eventId)` before teardown. Use `clientId` / `sessionId` to distinguish multiple sessions.
+通过 `const eventId = MeshStream.subscribeEvents(callback)` 订阅事件，退出前调用 `MeshStream.unsubscribeEvents(eventId)`。多会话时按 `clientId` / `sessionId` 区分事件归属。
 
 <details>
-<summary>Troubleshoot HBuilderX Android dependency resolution</summary>
+<summary>排查 HBuilderX Android 依赖解析问题</summary>
 
-### Android repository resolution
+### Android 仓库解析
 
-For local builds on macOS/Linux, if HBuilderX 5.33/5.34 cannot resolve the Maven dependency because its temporary Gradle project uses `PREFER_SETTINGS`, run the bundled setup script:
+在 macOS/Linux 本地调试时，若 HBuilderX 5.33/5.34 的临时 Gradle 工程因 `PREFER_SETTINGS` 找不到 Maven 依赖，运行随插件提供的配置脚本：
 
-```sh
+```bash
 python3 uni_modules/meshstream-p2p/scripts/configure-hbuilderx-gradle.py
 ```
 
-Python 3 is required. Setup keeps the Gradle executable already configured in HBuilderX and updates
-only its UTS Android launcher setting; no shell exports or terminal launch of HBuilderX are needed.
-If Gradle is not configured yet, add `--gradle /absolute/path/to/gradle` (a Gradle Wrapper is also supported).
-The launcher uses `PREFER_PROJECT` only in HBuilderX temporary dependency-resolution projects and
-keeps the exact public Maven dependency. Run setup again after moving the plugin, or add `--restore`
-to restore the previous Gradle setting.
+需要 Python 3。脚本沿用 HBuilderX 已配置的 Gradle，只更新 UTS Android 的启动器设置，
+不需要从终端启动 HBuilderX 或导出环境变量。若尚未配置 Gradle，添加
+`--gradle /absolute/path/to/gradle`（也支持 Gradle Wrapper）。启动器仅在 HBuilderX
+临时依赖解析工程中启用 `PREFER_PROJECT`，继续从官方 Maven 下载精确版本。
+更新插件位置后重新运行配置；使用同一命令加 `--restore` 可恢复原 Gradle 设置。
 
 </details>
 
-## Network and privacy
+## 网络与隐私
 
-SDK Key validation, configuration, tracker signaling and usage reporting process application identity, device platform, IP/network information, content/segment identifiers, transferred bytes and diagnostics. Explain to users that P2P uses upload bandwidth. The plugin does not access the camera, microphone, contacts or precise location and includes no advertising. Cleartext HTTP access is allowed only for the local proxy at `127.0.0.1` / `localhost`.
+SDK Key 校验、配置获取、tracker 和用量上报会处理应用标识、设备平台、IP/网络连接信息、内容及分片标识、上下行流量和诊断数据。接入方应告知用户 P2P 会使用上行网络流量。不读取相机、麦克风、通讯录或精确定位，无广告。HTTP 明文访问仅对本机代理 `127.0.0.1` / `localhost` 开放。
 
-## Verify P2P delivery
+## 确认 P2P 生效
 
-1. Play the same content in two devices or independently running instances, each with a valid Key. Use the same rendition and nearby playback positions. For rotating signed URLs, use the same stable content ID for the same content, and different IDs for different content.
-2. Watch peers and traffic in the demo. A nonzero peer count means a connection exists; **increasing P2P download or upload bytes** confirms media sharing.
-3. Close the other instance and check that HTTP/CDN playback continues. Also check seeking, switching content and cleanup when leaving playback.
+1. 在两台设备或两个可同时运行的实例中，用各自有效的 Key 播放同一内容，保持相同清晰度和相近播放进度。签名 URL 会变化时，为同一内容使用相同、稳定的内容 ID；不同内容不要共用 ID。
+2. 查看 Demo 的 Peer 数和流量统计。Peer 大于 0 表示已连接节点；**P2P 下载或上传字节持续增加**才说明发生了媒体共享。
+3. 关闭另一个实例，确认剩余实例仍能通过 HTTP/CDN 播放；然后测试拖动、切换内容和退出页面的释放流程。
 
-HTTP/CDN delivery is normal with one viewer or no shareable segments. Discovery and sharing also depend on account configuration, network connectivity and the content cached by both viewers.
+只有一个观看者或没有可共享分片时，主要走 HTTP/CDN 属于正常情况。发现 Peer 及实际共享还取决于账户配置、网络连通性和双方缓存内容。
 
-## More examples and support
+## 更多用法与支持
 
-See [advanced usage](https://meshstream.net/docs/sdk/uniapp-advanced/) for preload, live/VOD scheduling, player feedback, multiple sessions and diagnostics. See [CHANGELOG](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/CHANGELOG.md) for updates. Contact support@meshstream.net with the SDK version, OS, player and redacted logs.
+预加载、直播/点播调度、播放器状态回传、多会话及诊断，请参阅[高级用法](https://meshstream.net/zh/docs/sdk/uniapp-advanced/)。更新记录见 [CHANGELOG](https://github.com/Mesh-Stream/meshstream-p2p-uniapp-sdk/blob/main/CHANGELOG.md)。接入问题请联系 support@meshstream.net，并附 SDK 版本、系统、播放器和脱敏日志。
 
-## Other MeshStream SDKs
+## 其他 MeshStream SDK
 
-- [Web](https://github.com/Mesh-Stream/meshstream-p2p-web-sdk): JavaScript / TypeScript and browser players.
-- [iOS / macOS](https://github.com/Mesh-Stream/meshstream-p2p-ios-sdk): MeshStreamKit, Swift / Objective-C, SPM and CocoaPods.
-- [Android](https://github.com/Mesh-Stream/meshstream-p2p-android-sdk): Kotlin / Java, Maven and Media3 / ExoPlayer.
-- [Windows](https://github.com/Mesh-Stream/meshstream-p2p-Windows-sdk): C / C++ API for Windows 10 / 11 x64.
-- [Flutter](https://github.com/Mesh-Stream/meshstream-p2p-flutter-sdk): Dart plugin for iOS / Android.
-- [React Native](https://github.com/Mesh-Stream/meshstream-p2p-react-native-sdk): JavaScript / TypeScript API for iOS / Android.
+- [Web](https://github.com/Mesh-Stream/meshstream-p2p-web-sdk): JavaScript / TypeScript 与浏览器播放器.
+- [iOS / macOS](https://github.com/Mesh-Stream/meshstream-p2p-ios-sdk): MeshStreamKit、Swift / Objective-C、SPM 与 CocoaPods.
+- [Android](https://github.com/Mesh-Stream/meshstream-p2p-android-sdk): Kotlin / Java、Maven 与 Media3 / ExoPlayer.
+- [Windows](https://github.com/Mesh-Stream/meshstream-p2p-Windows-sdk): Windows 10 / 11 x64 C / C++ 接口.
+- [Flutter](https://github.com/Mesh-Stream/meshstream-p2p-flutter-sdk): 面向 iOS / Android 的 Dart 插件.
+- [React Native](https://github.com/Mesh-Stream/meshstream-p2p-react-native-sdk): 面向 iOS / Android 的 JavaScript / TypeScript API.

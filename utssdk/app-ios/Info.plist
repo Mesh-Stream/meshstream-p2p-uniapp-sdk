@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
   <key>NSLocalNetworkUsageDescription</key>
-  <string>MeshStream uses the local network to exchange media segments with nearby peers.</string>
+  <string>MeshStream 使用本地网络与附近 Peer 交换媒体分片。</string>
 </dict>
 </plist>

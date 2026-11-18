@@ -1,25 +1,26 @@
-# Changelog
+# 更新日志
 
 ## 1.1.3 - 2026-11-18
 
-- Refresh playback mode and fallback state from the native session so late bootstrap and P2P transitions are reflected by Uniapp callers.
-- Keep the public Android and iOS native dependencies pinned to 1.1.2.
-- Update the verification example to expose P2P upload bytes alongside download statistics.
+- 从原生会话刷新播放模式和回退状态，使延迟完成的 bootstrap 与 P2P 状态变化能同步给 Uniapp 调用方。
+- Android 和 iOS 原生公开依赖继续固定为 1.1.2。
+- 更新验收示例，同时展示 P2P 上传字节和下载统计。
 
 ## 1.1.1 - 2026-11-14
 
-- Upgrade the Android and iOS native SDK dependencies to 1.1.1.
-- Published to the DCloud plugin market with public Maven and CocoaPods dependencies.
+- Android 和 iOS 原生 SDK 依赖升级至 1.1.1。
+- 使用公开 Maven 与 CocoaPods 依赖发布到 DCloud 插件市场。
 
-## Unreleased
+## 未发布
 
-- Reject iOS native error responses in the JavaScript API, including statistics and diagnostics queries after a session closes.
-- Add repeatable HBuilderX 5.33/5.34 local Gradle setup and restore commands. The launcher retains the configured Gradle executable without requiring GUI environment exports and limits its repository workaround to HBuilderX dependency-resolution projects.
+- JavaScript API 拒绝 iOS 原生错误响应，包括会话关闭后的统计和诊断查询。
+- 增加可重复的 HBuilderX 5.33/5.34 本地 Gradle 配置与恢复命令；启动器保留已配置的 Gradle 可执行文件，无需 GUI 环境变量，并仅在 HBuilderX 依赖解析工程中启用仓库临时配置。
+- 固化 Uniapp 发布语言规范：DCloud 主说明、更新日志和用户可见文案默认使用简体中文，英文说明单独保存在 `README.en-US.md`。
 
 ## 1.1.0 - 2026-11-12
 
-- Pins Android and iOS native SDK dependencies to 1.1.0.
-- Adopts the native peer-discovery scheduling update while retaining the existing public API.
+- Android 和 iOS 原生 SDK 依赖固定为 1.1.0。
+- 采用原生 Peer 发现调度更新，同时保持现有公开 API 不变。
 
 ## 1.0.7 - 2026-11-09
 
@@ -42,22 +43,22 @@
 
 ## 1.0.4
 
-- Upgrade the public iOS dependency to MeshStreamKit 1.0.8 (iOS 15+).
-- Upgrade the public Android dependency to meshstream-android-sdk 1.0.7.
-- Align the Uniapp bridge with the native SDK shutdown and proxy connection cleanup fix.
+- iOS 公开依赖升级至 MeshStreamKit 1.0.8（iOS 15+）。
+- Android 公开依赖升级至 meshstream-android-sdk 1.0.7。
+- Uniapp bridge 与原生 SDK 的关闭流程和代理连接清理修复保持一致。
 
 ## 1.0.2
 
-- Add static `preload` and `setP2pEnabled` helpers for Vue/JavaScript callers.
-- Add numeric event subscriptions for Vue/JavaScript and use them in the demo so cleanup does not depend on a returned UTS function.
-- Add a JavaScript Promise adapter with explicit UTS result callbacks so native errors reach page catch handlers on HBuilderX 5.33.
-- Fix the Android UTS Maven repository to use the canonical public endpoint.
-- Restrict the SDK group to its public Maven repository and document the HBuilderX 5.33 repository workaround.
-- Fix iOS UTS event unsubscription by comparing subscription IDs instead of callback functions.
-- Add DCloud permissions, data collection, advertising, and platform declarations.
-- Record pending iOS runtime acceptance before market publication.
+- 为 Vue/JavaScript 调用方增加静态 `preload` 和 `setP2pEnabled` 方法。
+- 增加数字事件订阅，并在 Demo 中使用，使清理流程不依赖 UTS 返回的函数。
+- 增加带明确 UTS 结果回调的 JavaScript Promise 适配器，使 HBuilderX 5.33 能将原生错误传递给页面的 catch 处理。
+- 修复 Android UTS Maven 仓库地址，使用规范的公开入口。
+- 将 SDK 依赖组限制到公开 Maven 仓库，并记录 HBuilderX 5.33 的仓库解析处理。
+- 修复 iOS UTS 事件取消订阅，按订阅 ID 比较而不是比较函数。
+- 增加 DCloud 权限、数据处理、广告和平台声明。
+- 记录市场发布前 iOS 运行时验收待完成状态。
 
 ## 1.0.1
 
-- Upgrade the public iOS dependency to MeshStreamKit 1.0.7 (iOS 15+).
-- Upgrade the public Android dependency to meshstream-android-sdk 1.0.6.
+- iOS 公开依赖升级至 MeshStreamKit 1.0.7（iOS 15+）。
+- Android 公开依赖升级至 meshstream-android-sdk 1.0.6。
