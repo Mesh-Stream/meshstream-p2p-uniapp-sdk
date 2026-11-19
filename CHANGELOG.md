@@ -5,6 +5,7 @@
 - 从原生会话刷新播放模式和回退状态，使延迟完成的 bootstrap 与 P2P 状态变化能同步给 Uniapp 调用方。
 - Android 和 iOS 原生公开依赖继续固定为 1.1.2。
 - 更新验收示例，同时展示 P2P 上传字节和下载统计。
+- 已用官方市场精确包完成 HBuilderX 5.34 Android UTS 编译，生成并校验 `index.jar` 与 `classes.dex`。
 
 ## 1.1.1 - 2026-11-14
 

@@ -5,6 +5,7 @@
 - Refresh playback mode and fallback state from the native session so late bootstrap and P2P transitions are reflected by Uniapp callers.
 - Keep the public Android and iOS native dependencies pinned to 1.1.2.
 - Update the verification example to expose P2P upload bytes alongside download statistics.
+- 已用官方市场精确包完成 HBuilderX 5.34 Android UTS 编译，生成并校验 `index.jar` 与 `classes.dex`。
 
 ## 1.1.2 - 2026-11-16
 
