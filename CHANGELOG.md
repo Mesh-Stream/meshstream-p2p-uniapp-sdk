@@ -3,6 +3,7 @@
 ## 1.1.4 - candidate
 
 - 为 iOS `MeshStreamKit 1.1.2` 依赖显式指定公开 CocoaPods Specs source，避免云端构建使用滞后的镜像索引。
+- 修正 iOS bootstrap 延迟完成时 Uniapp 会话仍显示初始 `CONFIG_UNAVAILABLE` 快照的问题；真实 P2P 传输仍以下载/上传字节为准。
 
 ## 1.1.3 - 2026-11-18
 

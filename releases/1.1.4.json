@@ -36,7 +36,7 @@
     "androidMaven": "passed: public io.meshstream:meshstream-android-sdk:1.1.2 dependency reused from the verified 1.1.3 delivery",
     "iosCocoaPods": "passed: public 1.1.2 dependency with explicit Specs source",
     "utsTests": "passed: 10/10 JavaScript and HBuilderX Gradle tests",
-    "marketplacePackage": "passed: deterministic 18-file plugin archive; 31114 bytes; sha256 2e63847e8cf645b38f1b18799b8a2cce7d53336b7f9b83dd26cc2cb2aef6c710",
+    "marketplacePackage": "passed: deterministic 18-file plugin archive; 31500 bytes; sha256 eb84601664420c1fa258e824808eff0e3923008e810bcce9313c4d6cb7d45a32",
     "deviceAcceptance": "pending: iOS cloud build source fix verified in a temporary 1.1.3 probe; exact 1.1.4 market package and P2P transfer remain pending",
     "marketplacePublicInstall": "pending",
     "marketplaceUtsCompile": "pending"
