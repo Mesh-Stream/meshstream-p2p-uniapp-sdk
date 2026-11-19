@@ -43,7 +43,8 @@
     "iosCocoaPods": "passed: public 1.1.2 dependency",
     "utsTests": "passed: 10/10 JavaScript and HBuilderX Gradle tests",
     "marketplacePackage": "passed: deterministic 18-file plugin archive",
-    "deviceAcceptance": "pending: Android custom-base CDN playback, telemetry, close and recreate passed; real P2P transfer, fallback/recovery and iOS device acceptance remain pending",
+    "deviceAcceptance": "pending: Android custom-base CDN playback, telemetry, close and recreate passed; iOS exact-market project loading is blocked by the DCloud cloud CocoaPods source, while real P2P transfer and fallback/recovery remain pending",
+    "iosDeviceAcceptance": "pending: MeshStreamKit 1.1.2 arm64 device base was signed, installed and launched; exact market project loading awaits a DCloud cloud build with a source that resolves MeshStreamKit 1.1.2",
     "marketplacePublicInstall": "passed: official CLI exact version 1.1.3; 18/18 source files match",
     "marketplaceUtsCompile": "passed: HBuilderX 5.34 CLI compiled the exact 1.1.3 marketplace package in a complete App project; index.jar 66769 bytes sha256 f9ac2e29da1a87d5d9bf7c6cbf1bb8e4a811ecc5e32abca1f4babdedf9b2a01a; classes.dex 58008 bytes sha256 98bc77e238d1fee8da0bc9d600a96dc01d98562b016622a1d7740cf32d50d645"
   }
