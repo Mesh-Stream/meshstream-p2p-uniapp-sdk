@@ -79,9 +79,9 @@ export class MeshStreamPlaybackSession {
       // initial CONFIG_UNAVAILABLE state even though the client status has
       // already become P2P-capable. Refresh the wrapper from the authoritative
       // client status so callers do not retain that stale startup snapshot.
-      if (this.playbackModeValue === 'NATIVE_CDN' && this.fallbackReasonValue === 'CONFIG_UNAVAILABLE') {
+      if (this.playbackModeValue == 'NATIVE_CDN' && this.fallbackReasonValue == 'CONFIG_UNAVAILABLE') {
         const status = parseObject(MeshStreamNative.getStatus(this.clientId))
-        if (status.getBoolean('effectiveP2pEnabled') === true) {
+        if (status.getBoolean('effectiveP2pEnabled') == true) {
           this.playbackModeValue = 'NATIVE_P2P'
           this.fallbackReasonValue = null
         }
