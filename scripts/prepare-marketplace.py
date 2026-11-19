@@ -35,9 +35,12 @@ def main():
     assert android["dependencies"] == [
         f'{native["android"]["maven"]}:{native["android"]["version"]}'
     ], "Android dependency does not match release record"
-    assert ios["dependencies-pods"] == [
-        {"name": native["ios"]["pod"], "version": native["ios"]["version"]}
-    ], "iOS dependency does not match release record"
+    ios_dependency = ios["dependencies-pods"]
+    assert len(ios_dependency) == 1, "Expected one iOS pod dependency"
+    assert ios_dependency[0].get("name") == native["ios"]["pod"]
+    assert ios_dependency[0].get("version") == native["ios"]["version"]
+    if native["ios"].get("specsSource"):
+        assert ios_dependency[0].get("source") == native["ios"]["specsSource"]
 
     files = {
         "package.json": "package.json",

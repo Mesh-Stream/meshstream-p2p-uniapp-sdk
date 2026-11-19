@@ -4,7 +4,7 @@
 
 MeshStream is a uni-app P2P video and audio streaming plugin for Android and iOS apps. It provides a shared UTS / JavaScript client/session API, a local playback URL for your existing player, peer events and traffic statistics, with HTTP/CDN fallback.
 
-Current plugin: **1.1.3**. Both native SDK dependencies are **1.1.2**.
+Current plugin: **1.1.4**. Both native SDK dependencies are **1.1.2**.
 
 ## How it works
 

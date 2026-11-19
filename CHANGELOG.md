@@ -1,5 +1,9 @@
 # 更新日志
 
+## 1.1.4 - candidate
+
+- 为 iOS `MeshStreamKit 1.1.2` 依赖显式指定公开 CocoaPods Specs source，避免云端构建使用滞后的镜像索引。
+
 ## 1.1.3 - 2026-11-18
 
 - 从原生会话刷新播放模式和回退状态，使延迟完成的 bootstrap 与 P2P 状态变化能同步给 Uniapp 调用方。

@@ -1,0 +1,44 @@
+{
+  "package": "meshstream-p2p",
+  "version": "1.1.4",
+  "nativeDependencies": {
+    "android": {
+      "maven": "io.meshstream:meshstream-android-sdk",
+      "version": "1.1.2",
+      "minSdk": 21,
+      "abi": [
+        "armeabi-v7a",
+        "arm64-v8a",
+        "x86",
+        "x86_64"
+      ],
+      "aarSha256": "cf681e49753ee812ff52ff8dfc564cca502f87c51e602816fe94b8c4f017deff"
+    },
+    "ios": {
+      "pod": "MeshStreamKit",
+      "version": "1.1.2",
+      "runtimeVersion": "1.1.2",
+      "minimumOS": "iOS 15.0",
+      "zipSha256": "4d26ea4fd4a904de93289d51f0f804ebca41ffd89644f69240d4f068233c4f5a",
+      "specsSource": "https://cdn.cocoapods.org/"
+    }
+  },
+  "compatibility": {
+    "effectiveMinimum": "max(plugin, framework/runtime, player)",
+    "exampleMinSdk": 24
+  },
+  "publication": {
+    "dcloud": "pending",
+    "marketplace": "pending",
+    "marketUrl": "https://ext.dcloud.net.cn/plugin?name=meshstream-p2p"
+  },
+  "validation": {
+    "androidMaven": "passed: public io.meshstream:meshstream-android-sdk:1.1.2 dependency reused from the verified 1.1.3 delivery",
+    "iosCocoaPods": "passed: public 1.1.2 dependency with explicit Specs source",
+    "utsTests": "passed: 10/10 JavaScript and HBuilderX Gradle tests",
+    "marketplacePackage": "passed: deterministic 18-file plugin archive; 31114 bytes; sha256 2e63847e8cf645b38f1b18799b8a2cce7d53336b7f9b83dd26cc2cb2aef6c710",
+    "deviceAcceptance": "pending: iOS cloud build source fix verified in a temporary 1.1.3 probe; exact 1.1.4 market package and P2P transfer remain pending",
+    "marketplacePublicInstall": "pending",
+    "marketplaceUtsCompile": "pending"
+  }
+}
