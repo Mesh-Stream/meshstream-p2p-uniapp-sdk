@@ -39,6 +39,6 @@
     "marketplacePackage": "passed: deterministic 18-file plugin archive; 31608 bytes; sha256 97d66220c3eae3043ce767cabfffd9015f2a0d24025bff503d7f46b4d4a26996",
     "deviceAcceptance": "passed: iOS arm64 and Android arm64 real-device playback, P2P download/upload evidence, CDN continuity after peer loss, close and session recreation",
     "marketplacePublicInstall": "passed: official CLI downloaded exact 1.1.4 into a clean project; 18/18 files match the staged package",
-    "marketplaceUtsCompile": "blocked: HBuilderX 5.34 CLI produced Kotlin intermediate output but did not produce final index.jar/classes.dex because its Android UTS extension path requested reinstall"
+    "marketplaceUtsCompile": "passed: official HBuilderX 5.34 UTS compiler produced index.jar and classes.dex from the exact public 1.1.4 marketplace package; compiler reported 5 dependencies and no error"
   }
 }
