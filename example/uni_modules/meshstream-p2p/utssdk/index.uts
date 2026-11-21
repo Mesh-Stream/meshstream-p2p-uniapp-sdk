@@ -74,14 +74,22 @@ export class MeshStreamPlaybackSession {
       const rawFallbackReason = info.getString('fallbackReason')
       this.fallbackReasonValue = rawFallbackReason == null ? null : (rawFallbackReason as string)
 
-      // iOS 1.1.x can resolve bootstrap after the native playback object was
-      // created. Refresh the wrapper from the authoritative client status so
-      // callers do not retain the stale startup snapshot.
-      if (this.playbackModeValue == 'NATIVE_CDN' && this.fallbackReasonValue == 'CONFIG_UNAVAILABLE') {
-        const status = parseObject(MeshStreamNative.getStatus(this.clientId))
-        if (status.getBoolean('effectiveP2pEnabled') == true) {
+      // Bootstrap and tracker events can arrive after session creation. Use
+      // live transfer counters so a transient tracker error cannot leave a
+      // real P2P session displayed as CDN after peers or P2P bytes are present.
+      if (this.playbackModeValue == 'NATIVE_CDN') {
+        const stats = parseObject(MeshStreamNative.getStats(this.clientId, this.sessionId))
+        const p2pDownloaded = stats.getNumber('p2pDownloaded') ?? 0
+        const connectedPeers = stats.getNumber('connectedPeers') ?? 0
+        if (p2pDownloaded > 0 || connectedPeers > 0) {
           this.playbackModeValue = 'NATIVE_P2P'
           this.fallbackReasonValue = null
+        } else if (this.fallbackReasonValue == 'CONFIG_UNAVAILABLE') {
+          const status = parseObject(MeshStreamNative.getStatus(this.clientId))
+          if (status.getBoolean('effectiveP2pEnabled') == true) {
+            this.playbackModeValue = 'NATIVE_P2P'
+            this.fallbackReasonValue = null
+          }
         }
       }
     } catch (error) {

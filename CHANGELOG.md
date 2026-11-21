@@ -4,6 +4,7 @@
 
 - 为 iOS `MeshStreamKit 1.1.2` 依赖显式指定公开 CocoaPods Specs source，避免云端构建使用滞后的镜像索引。
 - 修正 iOS bootstrap 延迟完成时 Uniapp 会话仍显示初始 `CONFIG_UNAVAILABLE` 快照的问题；真实 P2P 传输仍以下载/上传字节为准。
+- 修正双端 Telemetry 在 tracker 短暂报错后继续显示 CDN 的问题；有实时 P2P peer 或下载字节时刷新为 P2P 状态并清除过期回退原因。
 
 ## 1.1.3 - 2026-11-18
 
