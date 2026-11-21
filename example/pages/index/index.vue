@@ -143,8 +143,16 @@ async function refreshTelemetry() {
   // The native session can move from CDN to P2P after creation. Read the
   // dynamic session properties on every telemetry refresh so the example does
   // not keep displaying the creation-time snapshot.
-  const nextPlaybackMode = activeSession.playbackMode
-  const nextFallbackReason = activeSession.fallbackReason
+  let nextPlaybackMode = activeSession.playbackMode
+  let nextFallbackReason = activeSession.fallbackReason
+  // The UTS property may still expose the creation snapshot while a native
+  // session is already transferring. The stats response is the authoritative
+  // source for the displayed mode once a peer or P2P bytes are present.
+  if (nextPlaybackMode === 'NATIVE_CDN' &&
+      (numberField(nextStats, 'p2pDownloaded') > 0 || numberField(nextStats, 'connectedPeers') > 0)) {
+    nextPlaybackMode = 'NATIVE_P2P'
+    nextFallbackReason = null
+  }
   if (client !== activeClient || session !== activeSession) return
   stats.value = nextStats
   diagnostics.value = nextDiagnostics
