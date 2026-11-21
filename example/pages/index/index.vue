@@ -205,8 +205,16 @@ async function start() {
         fallbackReason.value = ''
       }
       if (type === 'p2pUnavailable') {
-        playbackMode.value = 'NATIVE_CDN'
-        fallbackReason.value = textField(event, 'reason') || 'UNAVAILABLE'
+        // A transient tracker error can arrive after the session has already
+        // exchanged P2P bytes. Keep the UI in P2P mode once live counters prove
+        // that the swarm is active; the error remains available in Events.
+        const activeStats = stats.value
+        const p2pDownloaded = numberField(activeStats, 'p2pDownloaded')
+        const connectedPeers = numberField(activeStats, 'connectedPeers')
+        if (p2pDownloaded <= 0 && connectedPeers <= 0) {
+          playbackMode.value = 'NATIVE_CDN'
+          fallbackReason.value = textField(event, 'reason') || 'UNAVAILABLE'
+        }
       }
       if (type === 'trackerError' || type === 'peerConnectError') {
         appendLog(`${type}: ${numberField(event, 'totalErrors')}`)
